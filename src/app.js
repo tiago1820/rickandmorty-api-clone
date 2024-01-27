@@ -1,8 +1,9 @@
 const express = require("express");
-const router = require("./routes/index.js");
+// const router = require("./routes/index");
 
 const server = express();
 
+// Middlewares
 server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Credentials', 'true');
@@ -18,8 +19,6 @@ server.use((req, res, next) => {
 });
 
 server.use(express.json());
-server.use(express.urlencoded({ extended: true }));
-
 // server.use("/rickandmorty", router);
 
 module.exports = server;
