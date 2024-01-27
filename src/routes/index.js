@@ -1,8 +1,8 @@
-const router = require("express").Router();
+const { Router } = require("express");
+const router = Router();
 
+const characterRoute = require("./character.route.js");
 
-router.get("/", (req, res) => {
-    res.send("Bienvenido a la API de Rick and Morty");
-});
+router.use(characterRoute);
 
 module.exports = router;

@@ -19,15 +19,6 @@ const { Character } = sequelize.models;
 
 // Relacionamiento de tablas aqui:
 
-sequelize.sync({ force: true })
-    .then(() => {
-        console.log("Tablas sincronizadas correctamente.");
-    })
-    .catch(error => {
-        console.log("TIAGO: ", error);
-        console.log("Error al sincronizar las tablas: ", error);
-    })
-
 module.exports = {
     Character,
     conn: sequelize,
