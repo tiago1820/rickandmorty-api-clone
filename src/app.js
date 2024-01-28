@@ -1,4 +1,6 @@
 const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const { swaggerSpec } = require("./swagger.js");
 const morgan = require("morgan");
 const router = require("./routes/index");
 
@@ -21,6 +23,9 @@ server.use((req, res, next) => {
 });
 
 server.use("/", router);
+
+// Swagger
+server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 server.use(express.json());
 // server.use("/rickandmorty", router);
