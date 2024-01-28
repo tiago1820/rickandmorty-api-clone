@@ -6,12 +6,11 @@ class CharacterService {
         this.format = new FormattedData();
     }
 
-    getAllCharacters = async () => {
+    getAllCharacters = async (query) => {
         try {
-            const characters = await Character.findAll();
+            const characters = await Character.findAll({ where: query });
 
             return this.format.formattedCharacter(characters);
-    
         } catch (error) {
             console.log("ERROR: ", error);
             throw error;

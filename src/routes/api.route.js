@@ -15,8 +15,23 @@ apiRoute.get("/api", apiController.getApiInfo);
  *     responses:
  *       200:
  *         description: Information about the API.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 characters:
+ *                   type: string
+ *                   description: URL to retrieve characters data.
+ *                 locations:
+ *                   type: string
+ *                   description: URL to retrieve locations data.
+ *                 episodes:
+ *                   type: string
+ *                   description: URL to retrieve episodes data.
  *       500:
  *         description: Internal server error.
  */
+
 
 module.exports = apiRoute;

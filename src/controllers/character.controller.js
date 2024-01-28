@@ -6,10 +6,12 @@ class CharacterController {
     }
 
     getAllCharacters = async (req, res) => {
-        try {
-            const data = await this.charService.getAllCharacters();
 
-            if(!data) {
+        console.log("TIAGO", req.query);
+        try {
+            const data = await this.charService.getAllCharacters(req.query);
+
+            if (!data) {
                 return res.status(404).send("No hay registros de characters.");
             }
 
