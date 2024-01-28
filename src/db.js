@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 // Importar models aqui
-const CharacterModel = require("./models/Character");
+const CharacterModel = require("./models/character.model");
 
 const sequelize = new Sequelize(
     `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/rickandmortyapiclone`,
