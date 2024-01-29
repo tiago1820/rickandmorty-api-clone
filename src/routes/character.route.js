@@ -4,7 +4,31 @@ const characterRoute = Router();
 const CharacterController = require("../controllers/character.controller.js");
 const charController = new CharacterController();
 
-characterRoute.get("/character", charController.getAllCharacters);
+characterRoute.get("/character/:ids", charController.getOneMultipleCharacters);
+/**
+ * @swagger
+ * /character/{ids}:
+ *   get:
+ *     summary: Get characters by IDs.
+ *     tags:
+ *       - Character
+ *     parameters:
+ *       - in: path
+ *         name: ids
+ *         schema:
+ *           type: string
+ *         description: IDs of characters to retrieve (comma-separated).
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: List of characters matching the provided IDs.
+ *       404:
+ *         description: No characters found for the provided IDs.
+ *       500:
+ *         description: Internal server error.
+ */
+
+characterRoute.get("/character", charController.getCharacters);
 /**
  * @swagger
  * /character:
