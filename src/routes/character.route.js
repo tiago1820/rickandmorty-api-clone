@@ -4,6 +4,9 @@ const characterRoute = Router();
 const CharacterController = require("../controllers/character.controller.js");
 const charController = new CharacterController();
 
+characterRoute.post("/character", charController.postCharacter);
+
+
 characterRoute.get("/character/:ids", charController.getOneMultipleCharacters);
 /**
  * @swagger
