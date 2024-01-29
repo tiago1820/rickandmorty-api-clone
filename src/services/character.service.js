@@ -6,10 +6,22 @@ class CharacterService {
         this.format = new FormattedData();
     }
 
-    getAllCharacters = async (query) => {
+    getOneMultipleCharacters = async (query) => {
         try {
-            const characters = await Character.findAll({ where: query });
+            const characterIds = query.split(",").map(id => parseInt(id.trim()));
 
+            const characters = await Character.findAll({ where: { id: characterIds } });
+            return this.format.formattedCharacter(characters);
+        } catch (error) {
+            console.log("ERROR: ", error);
+            throw error;
+        }
+    }
+
+    getCharacters = async (filter) => {
+        try {
+    
+            const characters = await Character.findAll({ where: filter });
             return this.format.formattedCharacter(characters);
         } catch (error) {
             console.log("ERROR: ", error);

@@ -22,12 +22,15 @@ server.use((req, res, next) => {
     next();
 });
 
+server.use(express.urlencoded({ extended: true }));
+server.use(express.json());
+
 server.use("/", router);
 
 // Swagger
 server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-server.use(express.json());
+
 // server.use("/rickandmorty", router);
 
 module.exports = server;
