@@ -35,9 +35,12 @@ class S3Service {
 
     getImageURL = async (characters) => {
         for (const character of characters) {
-            const imageURL = await this.getFileURL(character.image);
-    
-            character.image = imageURL;
+
+            if (character.image) {
+                const imageURL = await this.getFileURL(character.image);
+                character.image = imageURL;
+            }
+            
         }
     
         return characters;
