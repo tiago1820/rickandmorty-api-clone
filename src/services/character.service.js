@@ -33,7 +33,6 @@ class CharacterService {
             const characters = await Character.findAll({ where: { id: characterIds } });
             return characters;
         } catch (error) {
-            console.log("ERROR: ", error);
             throw error;
         }
     }
@@ -44,7 +43,6 @@ class CharacterService {
             const characters = await Character.findAll({ where: filter });
             return characters;
         } catch (error) {
-            console.log("ERROR: ", error);
             throw error;
         }
     }

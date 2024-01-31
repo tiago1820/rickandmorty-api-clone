@@ -11,8 +11,12 @@ class CharacterController {
 
     postCharacter = async (req, res) => {
         const data = req.body;
-        data.image = req.files.image.name;
-        this.aws.uploadFile(req.files.image)
+
+        if (req.files) {
+            data.image = req.files.image.name;
+            this.aws.uploadFile(req.files.image)
+        }
+
 
         try {
             const result = await this.charService.postCharacter(data);
@@ -49,13 +53,12 @@ class CharacterController {
             if (!data) {
                 return res.status(404).send("No hay registros de characters.");
             }
-
+            
             data = await this.aws.getImageURL(data);
             data = await this.format.formattedCharacter(data);
 
             return res.status(200).json(data);
         } catch (error) {
-            console.log("Tiago: ", error);
             return res.status(500).send("Error interno del servidor.");
         }
     }
