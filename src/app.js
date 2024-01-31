@@ -1,4 +1,5 @@
 const express = require("express");
+const fileUpload  = require("express-fileupload");
 const swaggerUi = require("swagger-ui-express");
 const { swaggerSpec } = require("./swagger.js");
 const morgan = require("morgan");
@@ -7,6 +8,10 @@ const router = require("./routes/index");
 const server = express();
 
 // Middlewares
+server.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: './uploads'
+}));
 server.use(morgan("dev"));
 server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
