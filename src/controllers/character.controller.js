@@ -17,7 +17,6 @@ class CharacterController {
             this.aws.uploadFile(req.files.image)
         }
 
-
         try {
             const result = await this.charService.postCharacter(data);
             if (result) return res.status(201).json(result);
