@@ -64,4 +64,3 @@ class CharacterController {
 }
 
 module.exports = CharacterController;
-
