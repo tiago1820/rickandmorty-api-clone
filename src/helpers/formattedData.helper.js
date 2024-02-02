@@ -1,4 +1,3 @@
-const { getFileURL } = require("../../s3");
 
 class FormattedData {
     

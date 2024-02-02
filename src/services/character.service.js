@@ -39,7 +39,6 @@ class CharacterService {
 
     getCharacters = async (filter) => {
         try {
-
             const characters = await Character.findAll({ where: filter });
             return characters;
         } catch (error) {

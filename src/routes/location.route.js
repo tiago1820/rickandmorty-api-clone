@@ -6,6 +6,7 @@ const locController = new LocationController();
 
 locationRoute.post("/location", locController.postLocation);
 
+locationRoute.get("/location", locController.getLocations);
 
 module.exports = locationRoute;
 
