@@ -1,6 +1,6 @@
 
 class FormattedData {
-    
+
     formattedCharacter = async (characters) => {
         const formatted = {
             info: {
@@ -24,6 +24,20 @@ class FormattedData {
                 prev: null
             },
             results: locations
+        }
+
+        return formatted;
+    }
+
+    formattedEpisode = async (episodes) => {
+        const formatted = {
+            info: {
+                count: episodes.length,
+                pages: 1,
+                next: null,
+                prev: null
+            },
+            results: episodes
         }
 
         return formatted;
