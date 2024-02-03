@@ -26,6 +26,19 @@ class LocationService {
         }
     }
 
+    getOneOrMultipleLocations = async (query) => {
+        try {
+            const locationIds = query.split(",").map(id => parseInt(id.trim()));
+
+            const locations = await Location.findAll({
+                where: { id: locationIds }
+            });
+            return locations;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     getLocations = async (filter) => {
         try {
             const locations = await Location.findAll({ where: filter });
