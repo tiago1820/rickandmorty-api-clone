@@ -8,5 +8,6 @@ locationRoute.post("/location", locController.postLocation);
 
 locationRoute.get("/location", locController.getLocations);
 
-module.exports = locationRoute;
+locationRoute.get("/location/:ids", locController.getOneOrMultipleLocations);
 
+module.exports = locationRoute;
