@@ -13,6 +13,8 @@ class EpisodeService {
                 });
                 return updatedEpisode;
             } catch (error) {
+                console.log("Hola: ", error);
+
                 throw error;
             }
         } else {
@@ -23,6 +25,15 @@ class EpisodeService {
             } catch (error) {
                 throw error;
             }
+        }
+    }
+
+    getEpisodes = async (filter) => {
+        try {
+            const episodes = await Episode.findAll({ where: filter });
+            return episodes;
+        } catch (error) {
+            throw error;
         }
     }
 }
