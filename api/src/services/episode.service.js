@@ -28,6 +28,19 @@ class EpisodeService {
         }
     }
 
+    getOneOrMultipleEpisodes = async (query) => {
+        try {
+            const episodeIds = query.split(",").map(id => parseInt(id.trim()));
+
+            const episodes = await Episode.findAll({
+                where: { id: episodeIds }
+            });
+            return episodes;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     getEpisodes = async (filter) => {
         try {
             const episodes = await Episode.findAll({ where: filter });

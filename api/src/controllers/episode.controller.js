@@ -23,6 +23,23 @@ class EpisodeController {
         }
     }
 
+    getOneOrMultipleEpisodes = async (req, res) => {
+        try {
+            let data = await this.epiService.getOneOrMultipleEpisodes(req.params.ids);
+
+            if (!data) {
+                return res.status(404).json({ error: "No hay registros de characters." })
+            }
+
+            data = await this.format.formattedLocation(data);
+
+            return res.status(200).json(data);
+        } catch (error) {
+            console.log("dsdsdsd", error);
+            return res.status(500).json({ error: "Error interno del servidor." });
+        }
+    }
+
     getEpisodes = async (req, res) => {
         const filter = req.query;
 
@@ -38,7 +55,7 @@ class EpisodeController {
             return res.status(200).json(data);
         } catch (error) {
             console.log("Tiago: ", error)
-            return res.status(500).json({error: "Error interno del servidor."});
+            return res.status(500).json({ error: "Error interno del servidor." });
         }
     }
 }
