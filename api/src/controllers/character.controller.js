@@ -20,12 +20,11 @@ class CharacterController {
         try {
             const result = await this.charService.postCharacter(data);
 
-            console.log("#####: ", result)
+            if (!result) {
+                return res.status(404).json({error: "Error al crear o editar el personaje"});
+            }
 
-
-
-
-            if (result) return res.status(201).json(result);
+            return res.status(201).json(result);
 
         } catch (error) {
             return res.status(500).send("Error interno del servidor.");
