@@ -19,6 +19,12 @@ class CharacterController {
 
         try {
             const result = await this.charService.postCharacter(data);
+
+            console.log("#####: ", result)
+
+
+
+
             if (result) return res.status(201).json(result);
 
         } catch (error) {
