@@ -11,14 +11,28 @@ class CharacterService {
                     },
                     returning: true
                 });
-                return updatedCharacter;
+
+                const { dataValues } = updatedCharacter
+
+
+                return dataValues;
             } catch (error) {
                 throw error;
             }
         } else {
             data.created = new Date().toISOString();
             try {
-                const createdCharacter = await Character.create(data);
+                let createdCharacter = await Character.create(data);
+                const { id, dataValues } = createdCharacter;
+
+                const characterUrl = "http://localhost:3001/character/" + id;
+
+                await Character.update({ url: characterUrl }, {
+                    where: { id: id }
+                });
+
+                createdCharacter = await Character.findByPk(id);
+
                 return createdCharacter;
             } catch (error) {
                 throw error;
