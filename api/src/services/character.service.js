@@ -14,7 +14,6 @@ class CharacterService {
 
                 const { dataValues } = updatedCharacter
 
-
                 return dataValues;
             } catch (error) {
                 throw error;
@@ -23,8 +22,7 @@ class CharacterService {
             data.created = new Date().toISOString();
             try {
                 let createdCharacter = await Character.create(data);
-                const { id, dataValues } = createdCharacter;
-
+                const { id } = createdCharacter;
                 const characterUrl = "http://localhost:3001/character/" + id;
 
                 await Character.update({ url: characterUrl }, {
@@ -32,8 +30,9 @@ class CharacterService {
                 });
 
                 createdCharacter = await Character.findByPk(id);
-
-                return createdCharacter;
+                const { dataValues } = createdCharacter;
+                
+                return dataValues;
             } catch (error) {
                 throw error;
             }
