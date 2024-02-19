@@ -19,6 +19,11 @@ class LocationService {
             data.created = new Date().toISOString();
             try {
                 const createdLocation = await Location.create(data);
+                const id = createdLocation.id;
+                const url = "http://localhost:3001/location/" + id;
+                createdLocation.url = url
+                await createdLocation.save();
+
                 return createdLocation;
             } catch (error) {
                 throw error;
