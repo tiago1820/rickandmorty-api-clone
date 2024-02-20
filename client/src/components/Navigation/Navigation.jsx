@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import styles from './Navigation.module.css';
+import styles from '../Navigation/Navigation.module.css';
 
 export const Navigation = (props) => {
 
