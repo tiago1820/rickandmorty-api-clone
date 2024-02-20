@@ -3,6 +3,7 @@ import "bootstrap/dist/js/bootstrap";
 import { Navigation } from './components/Navigation/Navigation';
 import { Header } from './components/Header/Header';
 import { ShowCase } from "./components/ShowCase/ShowCase";
+import { Footer } from './components/Footer/Footer';
 import './App.css';
 
 export const App = (props) => {
@@ -12,6 +13,7 @@ export const App = (props) => {
             <Navigation />
             <Header />
             <ShowCase />
+            <Footer />
         </>
     )
 }

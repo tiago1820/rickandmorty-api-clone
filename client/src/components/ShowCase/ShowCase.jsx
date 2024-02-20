@@ -5,12 +5,14 @@ export const ShowCase = (props) => {
 
     return (
         <div className={styles.container}>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            <div className={styles.cardWrapper}>
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+            </div>
         </div>
     )
 
