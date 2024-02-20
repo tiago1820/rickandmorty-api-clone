@@ -12,12 +12,13 @@ class CharacterController {
     postCharacter = async (req, res) => {
         const data = req.body;
 
-        if (req.files) {
-            data.image = req.files.image.name;
-            this.aws.uploadFile(req.files.image)
-        }
 
         try {
+            if (req.files) {
+                data.image = req.files.image.name;
+                await this.aws.uploadFile(req.files.image)
+            }
+
             const result = await this.charService.postCharacter(data);
 
             if (!result) {
@@ -27,6 +28,7 @@ class CharacterController {
             return res.status(201).json(result);
 
         } catch (error) {
+            console.log("POST: ", error);
             return res.status(500).send("Error interno del servidor.");
         }
     }
