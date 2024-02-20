@@ -1,5 +1,9 @@
 .container {
     background-color: #272b33;
     color: white;
-    height: 900px;
+}
+
+.cardWrapper {
+    display: flex;
+    flex-wrap: wrap;
 }

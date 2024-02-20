@@ -1,0 +1,16 @@
+.characterCard {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Cambiado a un ancho relativo */
+    max-width: 600px; /* Establece un ancho máximo para mantener la legibilidad */
+    height: 200px;
+    border: 1px solid white;
+}
+
+.characterImg {
+    flex: 1;
+}
+
+.characterInfo {
+    flex: 1;
+}
