@@ -53,8 +53,32 @@ class CharacterService {
     getOneMultipleCharacters = async (query) => {
         try {
             const characterIds = query.split(",").map(id => parseInt(id.trim()));
+            const result = await Character.findAll({ where: { id: characterIds } });
+            const characters = result.map(item => item.dataValues);
+            const characterOrigins = [];
+            const characterLocations = [];
 
-            const characters = await Character.findAll({ where: { id: characterIds } });
+            for (const character of characters) {
+                let origin = null;
+                let location = null;
+
+                if (character.origin && character.origin.id) {
+                    origin = await Location.findByPk(character.origin.id, { attributes: ['name', 'url'] });
+                }
+
+                if (character.location && character.location.id) {
+                    location = await Location.findByPk(character.location.id, { attributes: ['name', 'url'] });
+                }
+
+                characterOrigins.push(origin);
+                characterLocations.push(location);
+            }
+
+            for (let i = 0; i < characters.length; i++) {
+                characters[i].origin = characterOrigins[i] ? { name: characterOrigins[i].name, url: characterOrigins[i].url } : null;
+                characters[i].location = characterLocations[i] ? { name: characterLocations[i].name, url: characterLocations[i].url } : null;
+            }
+
             return characters;
         } catch (error) {
             throw error;
@@ -63,9 +87,38 @@ class CharacterService {
 
     getCharacters = async (filter) => {
         try {
-            const characters = await Character.findAll({ where: filter });
+            const result = await Character.findAll({ where: filter });
+            const characters = result.map(item => item.dataValues);
+            const characterOrigins = [];
+            const characterLocations = [];
+
+            for (const character of characters) {
+                let origin = null;
+                let location = null;
+
+                if (character.origin && character.origin.id) {
+                    origin = await Location.findByPk(character.origin.id, { attributes: ['name', 'url'] });
+                }
+
+                if (character.location && character.location.id) {
+                    location = await Location.findByPk(character.location.id, { attributes: ['name', 'url'] });
+                }
+
+                characterOrigins.push(origin);
+                characterLocations.push(location);
+            }
+
+            for (let i = 0; i < characters.length; i++) {
+                characters[i].origin = characterOrigins[i] ? { name: characterOrigins[i].name, url: characterOrigins[i].url } : null;
+                characters[i].location = characterLocations[i] ? { name: characterLocations[i].name, url: characterLocations[i].url } : null;
+            }
+
+
+            console.log("AQUI: ", characters);
+
             return characters;
         } catch (error) {
+            console.log("ERROR: ", error);
             throw error;
         }
     }
