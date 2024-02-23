@@ -42,7 +42,12 @@ class CharacterController {
             }
 
             data = await this.aws.getImageURL(data);
-            data = await this.format.formattedCharacter(data);
+
+            if(data.length === 1) {
+                data = data[0];
+            } else {
+                data = await this.format.formattedCharacter(data);
+            }
 
             return res.status(200).json(data);
         } catch (error) {
