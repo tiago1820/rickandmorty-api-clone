@@ -123,6 +123,15 @@ class CharacterService {
         }
     }
 
+    countAllCharacters = async () => {
+        try {
+            const count = await Character.count();
+            return count;
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
 
 module.exports = CharacterService;

@@ -22,7 +22,7 @@ class CharacterController {
             const result = await this.charService.postCharacter(data);
 
             if (!result) {
-                return res.status(404).json({error: "Error al crear o editar el personaje"});
+                return res.status(404).json({ error: "Error al crear o editar el personaje" });
             }
 
             return res.status(201).json(result);
@@ -43,7 +43,7 @@ class CharacterController {
 
             data = await this.aws.getImageURL(data);
 
-            if(data.length === 1) {
+            if (data.length === 1) {
                 data = data[0];
             } else {
                 data = await this.format.formattedCharacter(data);
@@ -56,20 +56,42 @@ class CharacterController {
     }
 
     getCharacters = async (req, res) => {
-        const filter = req.query;
+        let { page, ...filter } = req.query;
+
+        if(page && parseInt(page) <= 0) {
+            page = 1;
+        }
+
+        const allowedFilters = ['name', 'status', 'species', 'type', 'gender'];
+        const invalidFilters = Object.keys(filter).filter(key => !allowedFilters.includes(key));
+        if (invalidFilters.length > 0) {
+            return res.status(400).send(`Filtros no permitidos: ${invalidFilters.join(', ')}`)
+        }
 
         try {
+
+            const totalCharacters = await this.charService.countAllCharacters();
             let data = await this.charService.getCharacters(filter);
 
             if (!data) {
                 return res.status(404).send("No hay registros de characters.");
             }
-            
+
+            if(page) {
+                page = parseInt(page);
+                if(!isNaN(page) && page > 0) {
+                    const pageSize = 20;
+                    const startIndex = (page -1) * pageSize;
+                    data = data.slice(startIndex, startIndex + pageSize)
+                }
+            }
+
             data = await this.aws.getImageURL(data);
-            data = await this.format.formattedCharacter(data);
+            data = await this.format.formattedCharacter(data, page, totalCharacters);
 
             return res.status(200).json(data);
         } catch (error) {
+            console.log("TIAGO: ", error);
             return res.status(500).send("Error interno del servidor.");
         }
     }
