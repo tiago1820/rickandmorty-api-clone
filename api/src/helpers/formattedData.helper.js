@@ -1,13 +1,22 @@
+const { BASE_URL } = require('../../config');
 
 class FormattedData {
 
-    formattedCharacter = async (characters) => {
+    formattedCharacter = async (characters, currentPage, totalCharacters) => {
+        const count = totalCharacters;
+        const totalPages = Math.floor(totalCharacters / 20);
+
+        const nextPage = currentPage < totalPages ? currentPage + 1 : 1;
+        const prevPage = currentPage > 1 ? currentPage - 1 : totalPages;
+
+        console.log("AQUI: ", totalCharacters);
+
         const formatted = {
             info: {
-                count: characters.length,
-                pages: 1,
-                next: null,
-                prev: null
+                count: count,
+                pages: totalPages,
+                next: nextPage ? `${BASE_URL}character/?page=${nextPage}` : null,
+                prev: prevPage ? `${BASE_URL}character/?page=${prevPage}` : null
             },
             results: characters
         }

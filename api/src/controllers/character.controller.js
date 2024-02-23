@@ -69,6 +69,8 @@ class CharacterController {
         }
 
         try {
+
+            const totalCharacters = await this.charService.countAllCharacters();
             let data = await this.charService.getCharacters(filter);
 
             if (!data) {
@@ -85,10 +87,11 @@ class CharacterController {
             }
 
             data = await this.aws.getImageURL(data);
-            data = await this.format.formattedCharacter(data);
+            data = await this.format.formattedCharacter(data, page, totalCharacters);
 
             return res.status(200).json(data);
         } catch (error) {
+            console.log("TIAGO: ", error);
             return res.status(500).send("Error interno del servidor.");
         }
     }
