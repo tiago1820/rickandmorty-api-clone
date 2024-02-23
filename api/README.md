@@ -215,5 +215,48 @@ You can get multiple characters by adding ids separated by commas. `/character/1
 
 ## Filter Characters
 
+You can include filters in the URL by adding additional query parameters. To begin filtering, add a `?` followed by the query `<query>=<value>`. If you want to chain several queries in the same call, use `&` followed by the query.
 
+## Available Parameters for Filtering
 
+- **name**: Filter characters by the given name.
+- **status**: Filter characters by the given status (alive, dead, or unknown).
+- **species**: Filter characters by the given species.
+- **type**: Filter characters by the given type.
+- **gender**: Filter characters by the given gender (female, male, genderless, or unknown).
+
+### GET http://localhost:3001.com/character/?name=rick&status=alive
+
+```json
+{
+	"info": {
+		"count": 2,
+		"pages": 1,
+		"next": null,
+		"prev": null
+	},
+	"results": [
+		{
+			"id": 145,
+			"name": "Tiago",
+			"status": "Alive",
+			"species": "Human",
+			"type": null,
+			"gender": "Male",
+			"origin": {
+				"name": "Mars",
+				"url": "https://rickandmortyapi.com/api/location/1"
+			},
+			"location": {
+				"name": "Saturn",
+				"url": "http://localhost:3001/location/8"
+			},
+			"image": "https://rickandmorty-api-clone.s3.sa-east-1.amazonaws.com/01.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVV7FS3Z6YR7HOV5U%2F20240223%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240223T194504Z&X-Amz-Expires=60&X-Amz-Signature=8498f46be61ea598a902055771312eb50dfc4e95e5ad0814838f72d5111c5088&X-Amz-SignedHeaders=host&x-id=GetObject",
+			"episode": null,
+			"url": "http://localhost:3001/character/145",
+			"created": "2024-02-23T12:58:36.385Z"
+		},
+		// ...
+	]
+}
+```
