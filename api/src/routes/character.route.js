@@ -4,10 +4,9 @@ const characterRoute = Router();
 const CharacterController = require("../controllers/character.controller.js");
 const charController = new CharacterController();
 
-characterRoute.post("/character", charController.postCharacter);
+characterRoute.post("/api/character", charController.postCharacter);
 
-
-characterRoute.get("/character/:ids", charController.getOneMultipleCharacters);
+characterRoute.get("/api/character/:ids", charController.getOneMultipleCharacters);
 /**
  * @swagger
  * /character/{ids}:
@@ -31,7 +30,7 @@ characterRoute.get("/character/:ids", charController.getOneMultipleCharacters);
  *         description: Internal server error.
  */
 
-characterRoute.get("/character", charController.getCharacters);
+characterRoute.get("/api/character", charController.getCharacters);
 /**
  * @swagger
  * /character:

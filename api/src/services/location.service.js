@@ -1,4 +1,5 @@
 const { Location } = require("../db.js");
+const { BASE_URL } = require('../../config.js');
 
 class LocationService {
 
@@ -20,7 +21,7 @@ class LocationService {
             try {
                 const createdLocation = await Location.create(data);
                 const id = createdLocation.id;
-                const url = "http://localhost:3001/location/" + id;
+                const url = `${BASE_URL}location` + id;
                 createdLocation.url = url
                 await createdLocation.save();
 
