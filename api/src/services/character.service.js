@@ -63,11 +63,11 @@ class CharacterService {
                 let location = null;
 
                 if (character.origin && character.origin.id) {
-                    origin = await Location.findByPk(character.origin.id, { attributes: ['name', 'url'] });
+                    origin = await this.getLocationOrOriginDetails(character.origin.id);
                 }
 
                 if (character.location && character.location.id) {
-                    location = await Location.findByPk(character.location.id, { attributes: ['name', 'url'] });
+                    location = await this.getLocationOrOriginDetails(character.location.id);
                 }
 
                 characterOrigins.push(origin);
@@ -97,11 +97,11 @@ class CharacterService {
                 let location = null;
 
                 if (character.origin && character.origin.id) {
-                    origin = await Location.findByPk(character.origin.id, { attributes: ['name', 'url'] });
+                    origin = await this.getLocationOrOriginDetails(character.origin.id);
                 }
 
                 if (character.location && character.location.id) {
-                    location = await Location.findByPk(character.location.id, { attributes: ['name', 'url'] });
+                    location = await this.getLocationOrOriginDetails(character.location.id);
                 }
 
                 characterOrigins.push(origin);
@@ -113,13 +113,18 @@ class CharacterService {
                 characters[i].location = characterLocations[i] ? { name: characterLocations[i].name, url: characterLocations[i].url } : null;
             }
 
-
-            console.log("AQUI: ", characters);
-
             return characters;
         } catch (error) {
             console.log("ERROR: ", error);
             throw error;
+        }
+    }
+
+    getLocationOrOriginDetails = async (id) => {
+        if (id) {
+            return await Location.findByPk(id, { attributes: ['name', 'url'] });
+        } else {
+            return null;
         }
     }
 
