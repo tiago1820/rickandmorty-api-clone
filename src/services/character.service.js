@@ -1,4 +1,4 @@
-const { Character, Location } = require("../db.js");
+const { Character, Location, Episode } = require("../db.js");
 
 class CharacterService {
 
@@ -20,8 +20,13 @@ class CharacterService {
             }
         } else {
             data.created = new Date().toISOString();
+            console.log("DATE: ", data)
+
             try {
+
                 let createdCharacter = await Character.create(data);
+
+
                 const { id: charId } = createdCharacter;
                 const characterUrl = "http://localhost:3001/character/" + charId;
 
@@ -32,15 +37,27 @@ class CharacterService {
                 createdCharacter = await Character.findByPk(charId);
                 let { dataValues } = createdCharacter;
 
-                const [prueba] = await Location.findAll({ where: { id: dataValues.location.id } })
+                const [location] = await Location.findAll({ where: { id: dataValues.location.id } });
+                const [episode] = await Episode.findAll({ where: { id: dataValues.episode.id } });
 
-                let { residents } = prueba.dataValues;
+                console.log("location: ", location);
+
+                // LOCATION
+                let { residents } = location.dataValues;
                 if (!residents) { residents = [] };
-
                 residents.push(characterUrl);
 
                 await Location.update({ residents: residents }, {
-                    where: { id: prueba.id }
+                    where: { id: location.id }
+                })
+
+                // EPISODE
+                let { characters } = episode.dataValues;
+                if (!characters) { characters = [] }
+                characters.push(characterUrl);
+
+                await Episode.update({ characters: characters }, {
+                    where: { id: episode.id }
                 })
 
                 createdCharacter = await Character.findByPk(charId);
