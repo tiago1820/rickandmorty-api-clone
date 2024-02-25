@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  postgredb:
+    image: postgres
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_DB=rickandmorty
+    ports:
+      - $DB_PORT:$DB_DOCKER_PORT
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    depends_on:
+      - postgredb
+    ports:
+      - 3001:3001
+    volumes:
+      - .:/rick-and-morty-api-clone/api
+
+volumes:
+  pg_data:
