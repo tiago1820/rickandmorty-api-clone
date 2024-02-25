@@ -34,7 +34,9 @@ class CharacterService {
 
                 const [prueba] = await Location.findAll({ where: { id: dataValues.location.id } })
 
-                const { residents } = prueba.dataValues;
+                let { residents } = prueba.dataValues;
+                if (!residents) { residents = [] };
+
                 residents.push(characterUrl);
 
                 await Location.update({ residents: residents }, {
