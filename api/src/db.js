@@ -1,17 +1,22 @@
 require("dotenv").config();
 const { Sequelize } = require("sequelize");
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
 
 // Importar models aqui
 const CharacterModel = require("./models/character.model");
 const LocationModel = require("./models/location.model");
 const EpisodeModel = require("./models/episode.model");
 
-
+// DOCKER
 const sequelize = new Sequelize(
-    `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/rickandmortyapiclone`,
+    `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/rickandmorty`,
     { logging: false, native: false }
 );
+
+// const sequelize = new Sequelize(
+//     `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/rickandmortyapiclone`,
+//     { logging: false, native: false }
+// );
 
 // Models
 CharacterModel(sequelize);

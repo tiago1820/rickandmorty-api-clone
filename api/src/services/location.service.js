@@ -50,6 +50,8 @@ class LocationService {
             const locations = await Location.findAll({ where: filter });
             return locations;
         } catch (error) {
+            console.log("LOCATION: ", error);
+
             throw error;
         }
     }
