@@ -21,7 +21,7 @@ services:
     ports:
       - 3001:3001
     volumes:
-      - .:/rick-and-morty-api-clone/api
+      - .:/rick-and-morty-api-clone
 
 volumes:
   pg_data:

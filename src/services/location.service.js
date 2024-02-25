@@ -21,7 +21,9 @@ class LocationService {
             try {
                 const createdLocation = await Location.create(data);
                 const id = createdLocation.id;
-                const url = `${BASE_URL}location` + id;
+                const url = `${BASE_URL}location/` + id;
+
+                console.log("URL LOCATION: ", url)
                 createdLocation.url = url
                 await createdLocation.save();
 

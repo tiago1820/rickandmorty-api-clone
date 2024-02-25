@@ -1,6 +1,6 @@
 FROM node:21.5
 
-WORKDIR /rick-and-morty-api-clone/api
+WORKDIR /rick-and-morty-api-clone
 COPY package.json .
 RUN npm install
 
