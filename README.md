@@ -1,6 +1,7 @@
 # Documentation
 
 ## Introduction
+This project is a clone of the Rick and Morty API, developed with the aim of learning and applying my knowledge in specific technologies. The goal of this project is to recreate the functionality of the Rick and Morty API using the technologies I learned and am learning.
 
 This documentation will help you get familiar with the resources of the Rick and Morty API and show you how to make different queries, so that you can get the most out of it.
 
