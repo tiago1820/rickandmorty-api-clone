@@ -45,10 +45,10 @@ Each resource includes an info object providing additional information about the
 ```json
 {
 	"info": {
-		"count": 146,
-		"pages": 1,
-		"next": null,
-		"prev": null
+		"count": 77,
+		"pages": 3,
+		"next": "http://localhost:3001/api/character/3",
+		"prev": "http://localhost:3001/api/character/1"
 	},
 	"results": [
 		// ...
@@ -124,34 +124,26 @@ You can retrieve a single character by specifying the character's ID as a parame
 
 ```json
 {
-	"info": {
-		"count": 1,
-		"pages": 1,
-		"next": null,
-		"prev": null
+	"id": 5,
+	"name": "Maria Ana",
+	"status": "Alive",
+	"species": "Human",
+	"type": null,
+	"gender": "Female",
+	"origin": {
+		"name": "Argentina",
+		"url": "http://localhost:3001/api/location/3"
 	},
-	"results": [
-		{
-			"id": 145,
-			"name": "Tiago",
-			"status": "Alive",
-			"species": "Human",
-			"type": null,
-			"gender": "Male",
-			"origin": {
-				"name": "Mars",
-				"url": "https://rickandmortyapi.com/api/location/1"
-			},
-			"location": {
-				"name": "Saturn",
-				"url": "http://localhost:3001/location/8"
-			},
-			"image": "https://rickandmorty-api-clone.s3.sa-east-1.amazonaws.com/01.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVV7FS3Z6YR7HOV5U%2F20240223%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240223T164505Z&X-Amz-Expires=60&X-Amz-Signature=3881311af3313cd7e52ea9fae685a3c5ae91022b67984fa30632cdd5480c4dd2&X-Amz-SignedHeaders=host&x-id=GetObject",
-			"episode": null,
-			"url": "http://localhost:3001/character/145",
-			"created": "2024-02-23T12:58:36.385Z"
-		}
-	]
+	"location": {
+		"name": "Argentina",
+		"url": "http://localhost:3001/api/location/3"
+	},
+	"image": "https://rickandmorty-api-clone.s3.sa-east-1.amazonaws.com/01.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVV7FS3Z6YR7HOV5U%2F20240226%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240226T190953Z&X-Amz-Expires=60&X-Amz-Signature=097b9d54856510009010184b9377eead77884e1aa2d63d5f520ba3985eb28c71&X-Amz-SignedHeaders=host&x-id=GetObject",
+	"episode": {
+		"id": "2"
+	},
+	"url": "http://localhost:3001/character/5",
+	"created": "2024-02-25T22:12:39.257Z"
 }
 ```
 
@@ -159,56 +151,59 @@ You can retrieve a single character by specifying the character's ID as a parame
 
 You can get multiple characters by adding ids separated by commas. `/character/1,2,3`.
 
-### GET http://localhost.com/character/145,146
+### GET http://localhost.com/character/5,79
 
 ```json
 {
 	"info": {
-		"count": 2,
-		"pages": 1,
-		"next": null,
-		"prev": null
+		"pages": null,
+		"next": "http://localhost:3001/api/character/2",
+		"prev": "http://localhost:3001/api/character/NaN"
 	},
 	"results": [
 		{
-			"id": 145,
-			"name": "Tiago",
-			"status": "Alive",
-			"species": "Human",
-			"type": null,
-			"gender": "Male",
-			"origin": {
-				"name": "Mars",
-				"url": "https://rickandmortyapi.com/api/location/1"
-			},
-			"location": {
-				"name": "Saturn",
-				"url": "http://localhost:3001/location/8"
-			},
-			"image": "https://rickandmorty-api-clone.s3.sa-east-1.amazonaws.com/01.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVV7FS3Z6YR7HOV5U%2F20240223%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240223T170222Z&X-Amz-Expires=60&X-Amz-Signature=f6e72b834222ad5d3ca8c2ccd4b71f6bb03ac2d67e9fdbbd7f4b2f63d4d26a76&X-Amz-SignedHeaders=host&x-id=GetObject",
-			"episode": null,
-			"url": "http://localhost:3001/character/145",
-			"created": "2024-02-23T12:58:36.385Z"
-		},
-		{
-			"id": 146,
-			"name": "Alexandra",
+			"id": 5,
+			"name": "Maria Ana",
 			"status": "Alive",
 			"species": "Human",
 			"type": null,
 			"gender": "Female",
 			"origin": {
-				"name": "Saturn",
-				"url": "https://rickandmortyapi.com/api/location/1"
+				"name": "Argentina",
+				"url": "http://localhost:3001/api/location/3"
 			},
 			"location": {
-				"name": "Saturn",
-				"url": "http://localhost:3001/location/8"
+				"name": "Argentina",
+				"url": "http://localhost:3001/api/location/3"
 			},
-			"image": "https://rickandmorty-api-clone.s3.sa-east-1.amazonaws.com/01.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVV7FS3Z6YR7HOV5U%2F20240223%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240223T170222Z&X-Amz-Expires=60&X-Amz-Signature=f6e72b834222ad5d3ca8c2ccd4b71f6bb03ac2d67e9fdbbd7f4b2f63d4d26a76&X-Amz-SignedHeaders=host&x-id=GetObject",
-			"episode": null,
-			"url": "http://localhost:3001/character/146",
-			"created": "2024-02-23T12:59:49.473Z"
+			"image": "https://rickandmorty-api-clone.s3.sa-east-1.amazonaws.com/01.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVV7FS3Z6YR7HOV5U%2F20240226%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240226T192405Z&X-Amz-Expires=60&X-Amz-Signature=b1f1a799ea7c28011cd4e4d54baefd789ed9059461820f639a2bb8c5057f1f80&X-Amz-SignedHeaders=host&x-id=GetObject",
+			"episode": {
+				"id": "2"
+			},
+			"url": "http://localhost:3001/character/5",
+			"created": "2024-02-25T22:12:39.257Z"
+		},
+		{
+			"id": 79,
+			"name": "Tiago Souza",
+			"status": "Alive",
+			"species": "Human",
+			"type": null,
+			"gender": "Male",
+			"origin": {
+				"name": "Argentina",
+				"url": "http://localhost:3001/api/location/3"
+			},
+			"location": {
+				"name": "Argentina",
+				"url": "http://localhost:3001/api/location/3"
+			},
+			"image": "https://rickandmorty-api-clone.s3.sa-east-1.amazonaws.com/01.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVV7FS3Z6YR7HOV5U%2F20240226%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240226T192405Z&X-Amz-Expires=60&X-Amz-Signature=b1f1a799ea7c28011cd4e4d54baefd789ed9059461820f639a2bb8c5057f1f80&X-Amz-SignedHeaders=host&x-id=GetObject",
+			"episode": {
+				"id": "1"
+			},
+			"url": "http://localhost:3001/character/79",
+			"created": "2024-02-26T19:23:48.317Z"
 		}
 	]
 }

@@ -48,7 +48,6 @@ class LocationController {
 
             return res.status(200).json(data);
         } catch (error) {
-            console.log("LOCATION: ", error);
 
             return res.status(500).send("Error interno del servidor.");
         }

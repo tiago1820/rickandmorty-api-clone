@@ -13,7 +13,6 @@ class EpisodeService {
                 });
                 return updatedEpisode;
             } catch (error) {
-                console.log("Hola: ", error);
 
                 throw error;
             }

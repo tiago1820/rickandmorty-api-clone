@@ -23,7 +23,6 @@ class LocationService {
                 const id = createdLocation.id;
                 const url = `${BASE_URL}location/` + id;
 
-                console.log("URL LOCATION: ", url)
                 createdLocation.url = url
                 await createdLocation.save();
 
@@ -52,7 +51,6 @@ class LocationService {
             const locations = await Location.findAll({ where: filter });
             return locations;
         } catch (error) {
-            console.log("LOCATION: ", error);
 
             throw error;
         }

@@ -19,45 +19,63 @@ class CharacterService {
                 throw error;
             }
         } else {
-            data.created = new Date().toISOString();
-            console.log("DATE: ", data)
 
             try {
 
-                let createdCharacter = await Character.create(data);
+                const info = {
+                    name: data.name,
+                    status: data.status,
+                    species: data.species,
+                    gender: data.gender,
+                    origin: {
+                        id: data.origin,
+                    },
+                    location: {
+                        id: data.location, 
+                    },
+                    episode: data.episode,
+                    created: new Date().toISOString()
+                };
+                
+                let createdCharacter = await Character.create(info);
+                
+                // const { id: charId, episode } = createdCharacter.dataValues;
+
+                console.log("CREADO: ", createdCharacter);
+
+                const episodeUrl = "http://localhost:3001/api/episode/";
+
+                if (!episode) { episode = [] };
+                episode.push(episodeUrl);
+
+                const characterUrl = "http://localhost:3001/api/character/" + charId;
 
 
-                const { id: charId } = createdCharacter;
-                const characterUrl = "http://localhost:3001/character/" + charId;
 
-                await Character.update({ url: characterUrl }, {
-                    where: { id: charId }
-                });
+                // if(!episode) {episode = []}
+                // episode.push(episodeUrl)
+
+
+                await Character.update({ url: characterUrl }, { where: { id: charId } });
 
                 createdCharacter = await Character.findByPk(charId);
                 let { dataValues } = createdCharacter;
 
-                const [location] = await Location.findAll({ where: { id: dataValues.location.id } });
-                const [episode] = await Episode.findAll({ where: { id: dataValues.episode.id } });
-
-                console.log("location: ", location);
-
                 // LOCATION
+                // const [location] = await Location.findAll({ where: { id: dataValues.location.id } });
                 let { residents } = location.dataValues;
                 if (!residents) { residents = [] };
                 residents.push(characterUrl);
-
-                await Location.update({ residents: residents }, {
-                    where: { id: location.id }
-                })
+                await Location.update({ residents: residents }, { where: { id: location.id } });
 
                 // EPISODE
-                let { characters } = episode.dataValues;
+                const [oneEpisode] = await Episode.findAll({ where: { id: dataValues.episode.id } })
+                let { characters } = oneEpisode.dataValues;
                 if (!characters) { characters = [] }
                 characters.push(characterUrl);
 
                 await Episode.update({ characters: characters }, {
-                    where: { id: episode.id }
+                    where: { id: oneEpisode.id }
                 })
 
                 createdCharacter = await Character.findByPk(charId);
@@ -114,6 +132,7 @@ class CharacterService {
             for (const character of characters) {
                 let origin = null;
                 let location = null;
+                let episode = null
 
                 if (character.origin && character.origin.id) {
                     origin = await this.getLocationOrOriginDetails(character.origin.id);
@@ -121,6 +140,10 @@ class CharacterService {
 
                 if (character.location && character.location.id) {
                     location = await this.getLocationOrOriginDetails(character.location.id);
+                }
+
+                if (character.episode && character.episode.id) {
+
                 }
 
                 characterOrigins.push(origin);

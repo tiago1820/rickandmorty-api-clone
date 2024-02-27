@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING
         },
         episode: {
-            type: DataTypes.JSONB
+            type: DataTypes.ARRAY(DataTypes.STRING)
         },
         url: {
             type: DataTypes.STRING
