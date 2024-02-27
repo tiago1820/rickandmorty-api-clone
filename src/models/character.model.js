@@ -23,16 +23,21 @@ module.exports = (sequelize) => {
             type: DataTypes.ENUM("Female", "Male", "Genderless", "unknown")
         },
         origin: {
-            type: DataTypes.JSONB
+            type: DataTypes.JSONB,
+            allowNull: false,
+            defaultValue: {}
         },
         location: {
-            type: DataTypes.JSONB
+            type: DataTypes.JSONB,
+            allowNull: true,
+            defaultValue: {}
         },
         image: {
             type: DataTypes.STRING
         },
         episode: {
-            type: DataTypes.ARRAY(DataTypes.STRING)
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            defaultValue: []
         },
         url: {
             type: DataTypes.STRING

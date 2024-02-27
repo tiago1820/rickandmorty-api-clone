@@ -5,22 +5,67 @@ class CharacterService {
     postCharacter = async (data) => {
         if (data.id) {
             try {
-                const [updatedRowsCount, [updatedCharacter]] = await Character.update(data, {
-                    where: {
-                        id: data.id
+                const characterId = data.id;
+
+                const episodeUrl = "http://localhost:3001/api/episode/" + data.episode;
+
+                const updatedInfo = {
+                    name: data.name,
+                    status: data.status,
+                    species: data.species,
+                    gender: data.gender,
+                    origin: {
+                        id: data.origin,
                     },
-                    returning: true
-                });
+                    location: {
+                        id: data.location,
+                    },
+                    created: new Date().toISOString()
+                };
 
-                const { dataValues } = updatedCharacter
+                // UPDATE CHARACTER INFO
+                await Character.update(updatedInfo, { where: { id: characterId } });
 
-                return dataValues;
+                // CHARACTER URL
+                const characterUrl = "http://localhost:3001/api/character/" + characterId;
+                await Character.update({ url: characterUrl }, { where: { id: characterId } });
+
+                // LOCATION
+                const [location] = await Location.findAll({ where: { id: data.location } });
+                let { residents } = location.dataValues;
+                if (!residents) { residents = []; }
+                if (!residents.includes(characterUrl)) {
+                    residents.push(characterUrl);
+                    await Location.update({ residents: residents }, { where: { id: data.location } });
+                }
+
+                // EPISODE
+                const [oneEpisode] = await Episode.findAll({ where: { id: data.episode } });
+                let { characters } = oneEpisode.dataValues;
+                if (!characters) { characters = []; }
+                if (!characters.includes(characterUrl)) {
+                    characters.push(characterUrl);
+                    await Episode.update({ characters: characters }, { where: { id: data.episode } });
+  
+                    let character = await Character.findByPk(characterId);
+                    let { episode } = character.dataValues;
+                    if (!episode) { episode = []; }
+                    if (!episode.includes(episodeUrl)) {
+                        episode.push(episodeUrl);
+                        await Character.update({ episode: episode }, { where: { id: characterId } });
+                    }
+                }
+                const updatedCharacter = await Character.findByPk(characterId);
+                return updatedCharacter;
+
             } catch (error) {
                 throw error;
             }
         } else {
 
             try {
+
+                const episodeUrl = "http://localhost:3001/api/episode/" + data.episode;
 
                 const info = {
                     name: data.name,
@@ -31,45 +76,34 @@ class CharacterService {
                         id: data.origin,
                     },
                     location: {
-                        id: data.location, 
+                        id: data.location,
                     },
-                    episode: data.episode,
                     created: new Date().toISOString()
                 };
-                
-                let createdCharacter = await Character.create(info);
-                
-                // const { id: charId, episode } = createdCharacter.dataValues;
 
-                console.log("CREADO: ", createdCharacter);
-
-                const episodeUrl = "http://localhost:3001/api/episode/";
-
+                let { dataValues } = await Character.create(info);
+                let { episode } = dataValues;
                 if (!episode) { episode = [] };
                 episode.push(episodeUrl);
 
+
+                const { id: charId } = dataValues;
                 const characterUrl = "http://localhost:3001/api/character/" + charId;
 
 
+                await Character.update({ url: characterUrl, episode }, { where: { id: charId } });
 
-                // if(!episode) {episode = []}
-                // episode.push(episodeUrl)
-
-
-                await Character.update({ url: characterUrl }, { where: { id: charId } });
-
-                createdCharacter = await Character.findByPk(charId);
-                let { dataValues } = createdCharacter;
+                dataValues = await Character.findByPk(charId);
 
                 // LOCATION
-                // const [location] = await Location.findAll({ where: { id: dataValues.location.id } });
+                const [location] = await Location.findAll({ where: { id: dataValues.location.id } });
                 let { residents } = location.dataValues;
                 if (!residents) { residents = [] };
                 residents.push(characterUrl);
                 await Location.update({ residents: residents }, { where: { id: location.id } });
 
                 // EPISODE
-                const [oneEpisode] = await Episode.findAll({ where: { id: dataValues.episode.id } })
+                const [oneEpisode] = await Episode.findAll({ where: { id: data.episode } })
                 let { characters } = oneEpisode.dataValues;
                 if (!characters) { characters = [] }
                 characters.push(characterUrl);
@@ -78,9 +112,9 @@ class CharacterService {
                     where: { id: oneEpisode.id }
                 })
 
-                createdCharacter = await Character.findByPk(charId);
+                dataValues = await Character.findByPk(charId);
 
-                return createdCharacter.dataValues;
+                return dataValues;
             } catch (error) {
                 throw error;
             }
@@ -88,6 +122,7 @@ class CharacterService {
     }
 
     getOneMultipleCharacters = async (query) => {
+
         try {
             const characterIds = query.split(",").map(id => parseInt(id.trim()));
             const result = await Character.findAll({ where: { id: characterIds } });
