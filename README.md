@@ -120,30 +120,34 @@ You can access the list of characters by using the `/character` endpoint.
 
 You can retrieve a single character by specifying the character's ID as a parameter in the endpoint: `/character/{id}`.
 
-### GET http://localhost:3001.com/character/145
+### GET http://localhost:3001.com/character/1
 
 ```json
 {
-	"id": 5,
-	"name": "Maria Ana",
+	"id": 1,
+	"name": "Tiago",
 	"status": "Alive",
 	"species": "Human",
 	"type": null,
-	"gender": "Female",
+	"gender": "Male",
 	"origin": {
 		"name": "Argentina",
-		"url": "http://localhost:3001/api/location/3"
+		"url": "http://localhost:3001/api/location/2"
 	},
 	"location": {
-		"name": "Argentina",
-		"url": "http://localhost:3001/api/location/3"
+		"name": "Brasil",
+		"url": "http://localhost:3001/api/location/1"
 	},
-	"image": "https://rickandmorty-api-clone.s3.sa-east-1.amazonaws.com/01.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVV7FS3Z6YR7HOV5U%2F20240226%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240226T190953Z&X-Amz-Expires=60&X-Amz-Signature=097b9d54856510009010184b9377eead77884e1aa2d63d5f520ba3985eb28c71&X-Amz-SignedHeaders=host&x-id=GetObject",
-	"episode": {
-		"id": "2"
-	},
-	"url": "http://localhost:3001/character/5",
-	"created": "2024-02-25T22:12:39.257Z"
+	"image": null,
+	"episode": [
+		"http://localhost:3001/api/episode/1",
+		"http://localhost:3001/api/episode/2",
+		"http://localhost:3001/api/episode/3",
+		"http://localhost:3001/api/episode/4",
+		"http://localhost:3001/api/episode/5"
+	],
+	"url": "http://localhost:3001/api/character/1",
+	"created": "2024-02-27T03:48:38.291Z"
 }
 ```
 
@@ -151,108 +155,109 @@ You can retrieve a single character by specifying the character's ID as a parame
 
 You can get multiple characters by adding ids separated by commas. `/character/1,2,3`.
 
-### GET http://localhost.com/character/5,79
+### GET http://localhost.com/character/1,3
 
 ```json
-{
-	"info": {
-		"pages": null,
-		"next": "http://localhost:3001/api/character/2",
-		"prev": "http://localhost:3001/api/character/NaN"
-	},
-	"results": [
-		{
-			"id": 5,
-			"name": "Maria Ana",
-			"status": "Alive",
-			"species": "Human",
-			"type": null,
-			"gender": "Female",
-			"origin": {
-				"name": "Argentina",
-				"url": "http://localhost:3001/api/location/3"
-			},
-			"location": {
-				"name": "Argentina",
-				"url": "http://localhost:3001/api/location/3"
-			},
-			"image": "https://rickandmorty-api-clone.s3.sa-east-1.amazonaws.com/01.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVV7FS3Z6YR7HOV5U%2F20240226%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240226T192405Z&X-Amz-Expires=60&X-Amz-Signature=b1f1a799ea7c28011cd4e4d54baefd789ed9059461820f639a2bb8c5057f1f80&X-Amz-SignedHeaders=host&x-id=GetObject",
-			"episode": {
-				"id": "2"
-			},
-			"url": "http://localhost:3001/character/5",
-			"created": "2024-02-25T22:12:39.257Z"
+[
+	{
+		"id": 3,
+		"name": "Tiago",
+		"status": "Alive",
+		"species": "Human",
+		"type": null,
+		"gender": "Male",
+		"origin": {
+			"name": "Estados Unidos",
+			"url": "http://localhost:3001/api/location/3"
 		},
-		{
-			"id": 79,
-			"name": "Tiago Souza",
-			"status": "Alive",
-			"species": "Human",
-			"type": null,
-			"gender": "Male",
-			"origin": {
-				"name": "Argentina",
-				"url": "http://localhost:3001/api/location/3"
-			},
-			"location": {
-				"name": "Argentina",
-				"url": "http://localhost:3001/api/location/3"
-			},
-			"image": "https://rickandmorty-api-clone.s3.sa-east-1.amazonaws.com/01.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVV7FS3Z6YR7HOV5U%2F20240226%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240226T192405Z&X-Amz-Expires=60&X-Amz-Signature=b1f1a799ea7c28011cd4e4d54baefd789ed9059461820f639a2bb8c5057f1f80&X-Amz-SignedHeaders=host&x-id=GetObject",
-			"episode": {
-				"id": "1"
-			},
-			"url": "http://localhost:3001/character/79",
-			"created": "2024-02-26T19:23:48.317Z"
-		}
-	]
-}
+		"location": {
+			"name": "Estados Unidos",
+			"url": "http://localhost:3001/api/location/3"
+		},
+		"image": null,
+		"episode": [
+			"http://localhost:3001/api/episode/1"
+		],
+		"url": "http://localhost:3001/api/character/3",
+		"created": "2024-02-27T03:47:40.682Z"
+	},
+	{
+		"id": 1,
+		"name": "Tiago",
+		"status": "Alive",
+		"species": "Human",
+		"type": null,
+		"gender": "Male",
+		"origin": {
+			"name": "Argentina",
+			"url": "http://localhost:3001/api/location/2"
+		},
+		"location": {
+			"name": "Brasil",
+			"url": "http://localhost:3001/api/location/1"
+		},
+		"image": null,
+		"episode": [
+			"http://localhost:3001/api/episode/1",
+			"http://localhost:3001/api/episode/2",
+			"http://localhost:3001/api/episode/3",
+			"http://localhost:3001/api/episode/4",
+			"http://localhost:3001/api/episode/5"
+		],
+		"url": "http://localhost:3001/api/character/1",
+		"created": "2024-02-27T03:48:38.291Z"
+	}
+]
 ```
 
-## Filter Characters
+## Filter characters
 
-You can include filters in the URL by adding additional query parameters. To begin filtering, add a `?` followed by the query `<query>=<value>`. If you want to chain several queries in the same call, use `&` followed by the query.
+You can also include filters in the URL by including additional query parameters. To start filtering add a ? followed by the query <query>=<value>. If you want to chain several queries in the same call, use & followed by the query.
 
-## Available Parameters for Filtering
+For example, If you want to check how many alive Ricks exist, just add ?name=rick&status=alive to the URL.
 
-- **name**: Filter characters by the given name.
-- **status**: Filter characters by the given status (alive, dead, or unknown).
-- **species**: Filter characters by the given species.
-- **type**: Filter characters by the given type.
-- **gender**: Filter characters by the given gender (female, male, genderless, or unknown).
+## Available Parameters
 
-### GET http://localhost:3001.com/character/?name=rick&status=alive
+You can include the following parameters to filter your queries:
+
+- **name**: Filter by the given name.
+- **status**: Filter by the given status (alive, dead, or unknown).
+- **species**: Filter by the given species.
+- **type**: Filter by the given type.
+- **gender**: Filter by the given gender (female, male, genderless, or unknown).
 
 ```json
 {
 	"info": {
-		"count": 2,
+		"count": 5,
 		"pages": 1,
-		"next": null,
-		"prev": null
+		"next": "http://localhost:3001/api/character/1",
+		"prev": "http://localhost:3001/api/character/1"
 	},
 	"results": [
 		{
-			"id": 145,
+			"id": 2,
 			"name": "Tiago",
 			"status": "Alive",
 			"species": "Human",
 			"type": null,
 			"gender": "Male",
 			"origin": {
-				"name": "Mars",
-				"url": "https://rickandmortyapi.com/api/location/1"
+				"name": "Estados Unidos",
+				"url": "http://localhost:3001/api/location/3"
 			},
 			"location": {
-				"name": "Saturn",
-				"url": "http://localhost:3001/location/8"
+				"name": "Estados Unidos",
+				"url": "http://localhost:3001/api/location/3"
 			},
-			"image": "https://rickandmorty-api-clone.s3.sa-east-1.amazonaws.com/01.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVV7FS3Z6YR7HOV5U%2F20240223%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240223T194504Z&X-Amz-Expires=60&X-Amz-Signature=8498f46be61ea598a902055771312eb50dfc4e95e5ad0814838f72d5111c5088&X-Amz-SignedHeaders=host&x-id=GetObject",
-			"episode": null,
-			"url": "http://localhost:3001/character/145",
-			"created": "2024-02-23T12:58:36.385Z"
+			"image": null,
+			"episode": [
+				"http://localhost:3001/api/episode/1"
+			],
+			"url": "http://localhost:3001/api/character/2",
+			"created": "2024-02-27T03:47:38.450Z"
 		},
-		// ...
+		// ...	
 	]
 }
 ```
