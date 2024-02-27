@@ -12,7 +12,6 @@ class CharacterController {
     postCharacter = async (req, res) => {
         const data = req.body;
 
-
         try {
             if (req.files) {
                 data.image = req.files.image.name;
@@ -46,10 +45,11 @@ class CharacterController {
             if (data.length === 1) {
                 data = data[0];
             } else {
-                data = await this.format.formattedCharacter(data);
+                return res.status(200).json(data);
+                // data = await this.format.formattedCharacter(data);
             }
 
-            return res.status(200).json(data);
+            
         } catch (error) {
             return res.status(500).send("Error interno del servidor.");
         }
@@ -70,8 +70,10 @@ class CharacterController {
 
         try {
 
-            const totalCharacters = await this.charService.countAllCharacters();
+            // const totalCharacters = await this.charService.countAllCharacters();
             let data = await this.charService.getCharacters(filter);
+            const count = data.length;
+            const totalCharacters = count;
 
             if (!data) {
                 return res.status(404).send("No hay registros de characters.");
@@ -91,7 +93,6 @@ class CharacterController {
 
             return res.status(200).json(data);
         } catch (error) {
-            console.log("TIAGO: ", error);
             return res.status(500).send("Error interno del servidor.");
         }
     }

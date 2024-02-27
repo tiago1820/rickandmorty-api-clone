@@ -7,6 +7,6 @@ require("./config.js");
 const PORT = 3001;
 
 server.listen(PORT, async () => {
-    await conn.sync({ force: false });
+    await conn.sync({ alter: false });
     console.log(`Listening on port ${PORT}`)
 });

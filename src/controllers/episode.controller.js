@@ -10,15 +10,12 @@ class EpisodeController {
     postEpisode = async (req, res) => {
         const data = req.body;
 
-        console.log("Data: ", data);
-
         try {
             const result = await this.epiService.postEpisode(data);
             if (result) {
                 return res.status(201).json(result);
             }
         } catch (error) {
-            console.log("Tiago: ", error);
             return res.status(500).json({ error: "Error interno del servidor." });
         }
     }
@@ -35,7 +32,6 @@ class EpisodeController {
 
             return res.status(200).json(data);
         } catch (error) {
-            console.log("dsdsdsd", error);
             return res.status(500).json({ error: "Error interno del servidor." });
         }
     }
@@ -54,7 +50,6 @@ class EpisodeController {
 
             return res.status(200).json(data);
         } catch (error) {
-            console.log("Tiago: ", error)
             return res.status(500).json({ error: "Error interno del servidor." });
         }
     }
