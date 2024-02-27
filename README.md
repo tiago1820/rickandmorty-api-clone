@@ -226,6 +226,8 @@ You can include the following parameters to filter your queries:
 - **type**: Filter by the given type.
 - **gender**: Filter by the given gender (female, male, genderless, or unknown).
 
+### GET http://localhost.com/character/?name=Tiago&status=Alive
+
 ```json
 {
 	"info": {
@@ -261,3 +263,36 @@ You can include the following parameters to filter your queries:
 	]
 }
 ```
+## Location
+There is a total of X locations sorted by id.
+
+## Location Schema
+
+| Key         | Type           | Description                                           |
+|-------------|----------------|-------------------------------------------------------|
+| id          | int            | The unique identifier of the location.               |
+| name        | string         | The name of the location.                            |
+| type        | string         | The type of the location.                            |
+| dimension   | string         | The dimension in which the location is located.      |
+| residents   | array (urls)   | List of characters who have been last seen in the location. |
+| url         | string (url)   | Link to the location's own endpoint.                 |
+| created     | string         | Time at which the location was created in the database. |
+
+## Get all locations
+You can access the list of locations by using the /location endpoint.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
