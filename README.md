@@ -373,5 +373,150 @@ You can include the following parameters to filter your queries:
 
 If you want to know how to use queries, check [here](#filter-characters)
 
+### Episode
+There is a total of 51 episodes sorted by id (which is of course the order of the episodes)
 
+## Episode Schema
 
+| Key         | Type           | Description                                           |
+|-------------|----------------|-------------------------------------------------------|
+| id          | int            | The id of the episode.                                |
+| name        | string         | The name of the episode.                              |
+| air_date    | string         | The air date of the episode.                          |
+| episode     | string         | The code of the episode.                              |
+| characters  | array (urls)   | List of characters who have been seen in the episode.|
+| url         | string (url)   | Link to the episode's own endpoint.                   |
+| created     | string         | Time at which the episode was created in the database.|
+
+### Get all episodes
+You can access the list of episodes by using the /episode endpoint.
+
+### GET http://localhost.com/api/episode
+
+```json
+{
+	"info": {
+		"count": 5,
+		"pages": 1,
+		"next": "http://localhost:3001/api/episode/1",
+		"prev": "http://localhost:3001/api/episode/1"
+	},
+	"results": [
+		{
+			"id": 1,
+			"name": "Pilot",
+			"air_date": "December 2, 2013",
+			"episode": "S01E01",
+			"characters": [
+				"http://localhost:3001/api/character/1",
+				"http://localhost:3001/api/character/2",
+				"http://localhost:3001/api/character/3",
+				"http://localhost:3001/api/character/4",
+				"http://localhost:3001/api/character/5"
+			],
+			"url": "https://rickandmortyapi.com/api/episode/1",
+			"created": "2024-02-27T03:46:07.233Z"
+		},
+    // ...
+
+	]
+}
+```
+
+### Get a single episode
+You can get a single episode by adding the id as a parameter: /episode/28
+
+### GET https://localhost.com/api/episode/5
+
+```json
+{
+	"id": 5,
+	"name": "Pilot",
+	"air_date": "December 2, 2013",
+	"episode": "S01E01",
+	"characters": [
+		"http://localhost:3001/api/character/1",
+		"http://localhost:3001/api/character/7"
+	],
+	"url": "https://rickandmortyapi.com/api/episode/1",
+	"created": "2024-02-27T03:46:12.149Z"
+}
+```
+
+### Get multiple episodes
+You can get multiple episodes by adding ids separated by commas. /location/1,2,3.
+
+```json
+[
+	{
+		"id": 1,
+		"name": "Pilot",
+		"air_date": "December 2, 2013",
+		"episode": "S01E01",
+		"characters": [
+			"http://localhost:3001/api/character/1",
+			"http://localhost:3001/api/character/2",
+			"http://localhost:3001/api/character/3",
+			"http://localhost:3001/api/character/4",
+			"http://localhost:3001/api/character/5"
+		],
+		"url": "https://rickandmortyapi.com/api/episode/1",
+		"created": "2024-02-27T03:46:07.233Z"
+	},
+	{
+		"id": 4,
+		"name": "Pilot",
+		"air_date": "December 2, 2013",
+		"episode": "S01E01",
+		"characters": [
+			"http://localhost:3001/api/character/1"
+		],
+		"url": "https://rickandmortyapi.com/api/episode/1",
+		"created": "2024-02-27T03:46:11.099Z"
+	},
+  // ...
+]
+
+```
+
+## Filter Episodes
+
+Available parameters:
+
+- **name**: Filter by the given name.
+- **episode**: Filter by the given episode code.
+
+If you want to know how to use queries, check [here](#filter-characters).
+
+### GET http://localhost:3001/api/episode/?name=Episode 2&episode=S01E01
+
+```json
+{
+	"info": {
+		"count": 2,
+		"pages": 1,
+		"next": "http://localhost:3001/api/episode/1",
+		"prev": "http://localhost:3001/api/episode/1"
+	},
+	"results": [
+		{
+			"id": 6,
+			"name": "Episode 2",
+			"air_date": "December 2, 2013",
+			"episode": "S01E01",
+			"characters": null,
+			"url": "https://rickandmortyapi.com/api/episode/1",
+			"created": "2024-02-27T20:00:53.520Z"
+		},
+		{
+			"id": 7,
+			"name": "Episode 2",
+			"air_date": "December 2, 2013",
+			"episode": "S01E01",
+			"characters": null,
+			"url": "https://rickandmortyapi.com/api/episode/1",
+			"created": "2024-02-27T20:01:43.469Z"
+		}
+	]
+}
+```
