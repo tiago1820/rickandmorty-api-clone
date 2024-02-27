@@ -44,12 +44,11 @@ class CharacterController {
 
             if (data.length === 1) {
                 data = data[0];
+                return res.status(200).json(data);
             } else {
                 return res.status(200).json(data);
-                // data = await this.format.formattedCharacter(data);
             }
-
-            
+      
         } catch (error) {
             return res.status(500).send("Error interno del servidor.");
         }
@@ -70,7 +69,6 @@ class CharacterController {
 
         try {
 
-            // const totalCharacters = await this.charService.countAllCharacters();
             let data = await this.charService.getCharacters(filter);
             const count = data.length;
             const totalCharacters = count;
