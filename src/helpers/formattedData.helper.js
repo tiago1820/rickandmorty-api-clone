@@ -61,13 +61,29 @@ class FormattedData {
         return formatted;
     }
 
-    formattedEpisode = async (episodes) => {
+    formattedEpisode = async (episodes, currentPage = 1, totalEpisodes) => {
+        let totalPages = Math.floor(totalEpisodes / 20);
+        if(totalPages < 1){
+            totalPages = 1;
+        }
+        
+        let nextPage = currentPage + 1;
+        let prevPage = currentPage - 1;
+
+        if(nextPage > totalPages) {
+            nextPage = 1;
+        }
+
+        if (prevPage < 1) {
+            prevPage = totalPages
+        }
+        
         const formatted = {
             info: {
-                count: episodes.length,
-                pages: 1,
-                next: null,
-                prev: null
+                count: totalEpisodes,
+                pages: totalPages,
+                next: `${BASE_URL}episode/${nextPage}`,
+                prev: `${BASE_URL}episode/${prevPage}`
             },
             results: episodes
         }
