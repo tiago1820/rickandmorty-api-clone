@@ -50,7 +50,7 @@ class EpisodeController {
         const allowedFilters = ['name', 'episode'];
         const invalidFilters = Object.keys(filter).filter(key => !allowedFilters.includes(key));
         if (invalidFilters.length > 0) {
-            return res.status(400).send(`Filtros no permitidos: ${invalidFilters.join(', ')}`)
+            return res.status(400).json({error: `Filtros no permitidos: ${invalidFilters.join(', ')}`})
         }
 
         try {

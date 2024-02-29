@@ -14,7 +14,7 @@ class LocationController {
             const result = await this.locService.postLocation(data);
             if (result) return res.status(201).json(result);
         } catch (error) {
-            return res.status(500).send("Error interno del servidor.");
+            return res.status(500).json({error: "Error interno del servidor."});
         }
     }
 
@@ -47,7 +47,7 @@ class LocationController {
         const allowedFilters = ['name', 'type', 'dimension'];
         const invalidFilters = Object.keys(filter).filter(key => !allowedFilters.includes(key));
         if (invalidFilters.length > 0) {
-            return res.status(400).send(`Filtros no permitidos: ${invalidFilters.join(', ')}`)
+            return res.status(400).json({error: `Filtros no permitidos: ${invalidFilters.join(', ')}`})
         }
 
         try {
@@ -73,7 +73,7 @@ class LocationController {
             return res.status(200).json(data);
         } catch (error) {
 
-            return res.status(500).send("Error interno del servidor.");
+            return res.status(500).json({error: "Error interno del servidor."});
         }
     }
 }
