@@ -1,11 +1,16 @@
 const CharacterService = require("../services/character.service.js");
+const AuthService = require('../services/auth.service.js');
 const S3Service = require("../services/s3.service.js");
 const FormattedData = require("../helpers/formattedData.helper.js");
+const jwt = require('jsonwebtoken');
+const { SECRET } = process.env;
+
 
 class CharacterController {
     constructor() {
         this.format = new FormattedData();
         this.charService = new CharacterService();
+        this.auth = new AuthService();
         this.aws = new S3Service();
     }
 
@@ -53,7 +58,16 @@ class CharacterController {
         }
     }
 
-    getCharacters = async (req, res) => {
+    getCharacters =  async (req, res, next) => {
+       
+
+        const user = await this.auth.show(req.userId);
+
+        if(!user) {
+            return res.status(404).send('No user found');
+        }
+
+
         let { page, ...filter } = req.query;
 
         if (page && parseInt(page) <= 0) {

@@ -5,6 +5,7 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_DOCKER_PORT } = process.env;
 const CharacterModel = require("./models/character.model");
 const LocationModel = require("./models/location.model");
 const EpisodeModel = require("./models/episode.model");
+const AuthModel = require("./models/auth.model");
 
 const sequelize = new Sequelize(
     `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_DOCKER_PORT}/rickandmorty`,
@@ -14,14 +15,17 @@ const sequelize = new Sequelize(
 CharacterModel(sequelize);
 LocationModel(sequelize);
 EpisodeModel(sequelize);
+AuthModel(sequelize);
 
 const { Character } = sequelize.models;
 const { Location } = sequelize.models;
 const { Episode } = sequelize.models;
+const { Auth } = sequelize.models;
 
 module.exports = {
     Character,
     Location,
     Episode,
+    Auth,
     conn: sequelize,
 }
