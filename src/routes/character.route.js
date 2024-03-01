@@ -9,9 +9,9 @@ characterRoute.post("/api/character", charController.postCharacter);
 characterRoute.get("/api/character/:ids", charController.getOneMultipleCharacters);
 /**
  * @swagger
- * /character/{ids}:
+ * /api/character/{ids}:
  *   get:
- *     summary: Get characters by IDs.
+ *     summary: Get characters by one or multiples IDs.
  *     tags:
  *       - Character
  *     parameters:
@@ -33,7 +33,7 @@ characterRoute.get("/api/character/:ids", charController.getOneMultipleCharacter
 characterRoute.get("/api/character", charController.getCharacters);
 /**
  * @swagger
- * /character:
+ * /api/character:
  *   get:
  *     summary: Get characters based on specified criteria or retrieve all characters.
  *     tags:
@@ -64,6 +64,11 @@ characterRoute.get("/api/character", charController.getCharacters);
  *         schema:
  *           type: string
  *         description: Filter characters by gender.
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Specify the page number for pagination.
  *     responses:
  *       200:
  *         description: List of characters matching the specified criteria, or all characters if no criteria are provided.
