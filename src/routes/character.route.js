@@ -2,7 +2,9 @@ const { Router } = require("express");
 const characterRoute = Router();
 
 const CharacterController = require("../controllers/character.controller.js");
+const Encryption = require('../helpers/encryption.helper.js');
 const charController = new CharacterController();
+const encrypt = new Encryption();
 
 characterRoute.post("/api/character", charController.postCharacter);
 
@@ -30,7 +32,7 @@ characterRoute.get("/api/character/:ids", charController.getOneMultipleCharacter
  *         description: Internal server error.
  */
 
-characterRoute.get("/api/character", charController.getCharacters);
+characterRoute.get("/api/character", encrypt.verifyToken, charController.getCharacters);
 /**
  * @swagger
  * /api/character:

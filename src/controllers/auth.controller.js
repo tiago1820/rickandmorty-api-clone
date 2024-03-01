@@ -18,10 +18,10 @@ class AuthController {
             // alta en la base de datos
             const newUser = await this.auth.signup(email, password);
             // se crea el token
+
             const token = jwt.sign({ id: newUser.id }, SECRET, {
                 expiresIn: 60 * 60 * 24
             });
-
 
             return res.status(200).json({ auth: true, token });
         } catch (error) {
@@ -31,13 +31,32 @@ class AuthController {
             return res.status(500).json("Error interno del servidor");
         }
 
-
-
-        return res.status(200).json("signup");
     }
 
     signin = async (req, res) => {
-        return res.status(200).json("signin");
+        const { email, password } = req.body;
+        try {
+            const userData = await this.auth.show(email);
+            if (!userData) {
+                return res.status(401).json({ auth: false, token: null });
+            }
+
+            const validPassword = await this.encrypt.validatePassword(password, userData.password);
+            if (!validPassword) {
+                return res.status(401).json({ auth: false, token: null });
+            }
+
+            const token = jwt.sign({ id: userData.id }, SECRET, {
+                expiresIn: 60 * 60 * 24
+            });
+
+            return res.status(200).json({ auth: true, token });
+        } catch (error) {
+            console.error("Error en signin:", error);
+            return res.status(500).json({ error: "Error interno del servidor" });
+        }
+        
+
     }
 }
 
