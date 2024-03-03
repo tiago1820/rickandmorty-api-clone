@@ -6,9 +6,9 @@ const Encryption = require('../helpers/encryption.helper.js');
 const charController = new CharacterController();
 const encrypt = new Encryption();
 
-characterRoute.post("/api/character", charController.postCharacter);
+characterRoute.post("/api/character", encrypt.verifyToken, charController.postCharacter);
 
-characterRoute.get("/api/character/:ids", charController.getOneMultipleCharacters);
+characterRoute.get("/api/character/:ids", encrypt.verifyToken, charController.getOneMultipleCharacters);
 /**
  * @swagger
  * /api/character/{ids}:

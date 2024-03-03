@@ -4,9 +4,12 @@ const locationRoute = Router();
 const LocationController = require("../controllers/location.controller.js");
 const locController = new LocationController();
 
-locationRoute.post("/api/location", locController.postLocation);
+const Encryption = require('../helpers/encryption.helper.js');
+const encrypt = new Encryption();
 
-locationRoute.get("/api/location", locController.getLocations);
+locationRoute.post("/api/location", encrypt.verifyToken, locController.postLocation);
+
+locationRoute.get("/api/location", encrypt.verifyToken, locController.getLocations);
 /**
  * @swagger
  * /api/location:

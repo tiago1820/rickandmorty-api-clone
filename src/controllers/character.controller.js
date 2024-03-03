@@ -32,6 +32,7 @@ class CharacterController {
             return res.status(201).json(result);
 
         } catch (error) {
+            console.log("AQUI: ", error);
             return res.status(500).json({ error: "Error interno del servidor." });
         }
     }

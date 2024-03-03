@@ -4,9 +4,12 @@ const episodeRoute = Router();
 const EpisodeController = require("../controllers/episode.controller.js");
 const epiController = new EpisodeController();
 
-episodeRoute.post("/api/episode", epiController.postEpisode);
+const Encryption = require('../helpers/encryption.helper.js');
+const encrypt = new Encryption();
 
-episodeRoute.get("/api/episode", epiController.getEpisodes);
+episodeRoute.post("/api/episode", encrypt.verifyToken, epiController.postEpisode);
+
+episodeRoute.get("/api/episode", encrypt.verifyToken, epiController.getEpisodes);
 /**
  * @swagger
  * /api/episode:
