@@ -6,33 +6,7 @@ const Encryption = require('../helpers/encryption.helper.js');
 const charController = new CharacterController();
 const encrypt = new Encryption();
 
-characterRoute.post("/api/character", encrypt.verifyToken, charController.postCharacter);
-
-characterRoute.get("/api/character/:ids", encrypt.verifyToken, charController.getOneMultipleCharacters);
-/**
- * @swagger
- * /api/character/{ids}:
- *   get:
- *     summary: Get characters by one or multiples IDs.
- *     tags:
- *       - Character
- *     parameters:
- *       - in: path
- *         name: ids
- *         schema:
- *           type: string
- *         description: IDs of characters to retrieve (comma-separated).
- *         required: true
- *     responses:
- *       200:
- *         description: List of characters matching the provided IDs.
- *       404:
- *         description: No characters found for the provided IDs.
- *       500:
- *         description: Internal server error.
- */
-
-characterRoute.get("/api/character", encrypt.verifyToken, charController.getCharacters);
+characterRoute.get("/api/character", encrypt.verifyToken, charController.index);
 /**
  * @swagger
  * /api/character:
@@ -79,5 +53,34 @@ characterRoute.get("/api/character", encrypt.verifyToken, charController.getChar
  *       500:
  *         description: Internal server error.
  */
+
+characterRoute.get("/api/character/:ids", encrypt.verifyToken, charController.show);
+/**
+ * @swagger
+ * /api/character/{ids}:
+ *   get:
+ *     summary: Get characters by one or multiples IDs.
+ *     tags:
+ *       - Character
+ *     parameters:
+ *       - in: path
+ *         name: ids
+ *         schema:
+ *           type: string
+ *         description: IDs of characters to retrieve (comma-separated).
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: List of characters matching the provided IDs.
+ *       404:
+ *         description: No characters found for the provided IDs.
+ *       500:
+ *         description: Internal server error.
+ */
+
+characterRoute.post("/api/character", encrypt.verifyToken, charController.store);
+
+characterRoute.put('/api/character', encrypt.verifyToken, charController.update);
+
 
 module.exports = characterRoute;
