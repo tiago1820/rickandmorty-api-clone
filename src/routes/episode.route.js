@@ -7,9 +7,7 @@ const epiController = new EpisodeController();
 const Encryption = require('../helpers/encryption.helper.js');
 const encrypt = new Encryption();
 
-episodeRoute.post("/api/episode", encrypt.verifyToken, epiController.postEpisode);
-
-episodeRoute.get("/api/episode", encrypt.verifyToken, epiController.getEpisodes);
+episodeRoute.get("/api/episode", encrypt.verifyToken, epiController.index);
 /**
  * @swagger
  * /api/episode:
@@ -84,7 +82,7 @@ episodeRoute.get("/api/episode", encrypt.verifyToken, epiController.getEpisodes)
  *         description: Internal server error.
  */
 
-episodeRoute.get("/api/episode/:ids", epiController.getOneOrMultipleEpisodes);
+episodeRoute.get("/api/episode/:ids", encrypt.verifyToken, epiController.show);
 /**
  * @swagger
  * /api/episode/{ids}:
@@ -165,5 +163,9 @@ episodeRoute.get("/api/episode/:ids", epiController.getOneOrMultipleEpisodes);
  *       500:
  *         description: Internal server error.
  */
+
+episodeRoute.post("/api/episode", encrypt.verifyToken, epiController.store);
+
+episodeRoute.put("/api/episode", encrypt.verifyToken, epiController.update);
 
 module.exports = episodeRoute;

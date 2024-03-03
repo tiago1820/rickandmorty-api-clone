@@ -7,9 +7,7 @@ const locController = new LocationController();
 const Encryption = require('../helpers/encryption.helper.js');
 const encrypt = new Encryption();
 
-locationRoute.post("/api/location", encrypt.verifyToken, locController.postLocation);
-
-locationRoute.get("/api/location", encrypt.verifyToken, locController.getLocations);
+locationRoute.get("/api/location", encrypt.verifyToken, locController.index);
 /**
  * @swagger
  * /api/location:
@@ -82,7 +80,7 @@ locationRoute.get("/api/location", encrypt.verifyToken, locController.getLocatio
  *         description: Internal server error.
  */
 
-locationRoute.get("/api/location/:ids", locController.getOneOrMultipleLocations);
+locationRoute.get("/api/location/:ids", locController.show);
 /**
  * @swagger
  * /api/location/{ids}:
@@ -136,5 +134,9 @@ locationRoute.get("/api/location/:ids", locController.getOneOrMultipleLocations)
  *       500:
  *         description: Internal server error.
  */
+
+locationRoute.post("/api/location", encrypt.verifyToken, locController.store);
+
+locationRoute.put('/api/location', encrypt.verifyToken, locController.update);
 
 module.exports = locationRoute;
