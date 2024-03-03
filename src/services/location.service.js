@@ -3,37 +3,16 @@ const { BASE_URL } = require('../../config.js');
 
 class LocationService {
 
-    postLocation = async (data) => {
-        if (data.id) {
-            try {
-                const [updatedRowsCount, [updatedLocation]] = await Location.update(data, {
-                    where: {
-                        id: data.id
-                    },
-                    returning: true
-                });
-                return updatedLocation;
-            } catch (error) {
-                throw error;
-            }
-        } else {
-            data.created = new Date().toISOString();
-            try {
-                const createdLocation = await Location.create(data);
-                const id = createdLocation.id;
-                const url = `${BASE_URL}location/` + id;
-
-                createdLocation.url = url
-                await createdLocation.save();
-
-                return createdLocation;
-            } catch (error) {
-                throw error;
-            }
+    index = async (filter) => {
+        try {
+            const locations = await Location.findAll({ where: filter });
+            return locations;
+        } catch (error) {
+            throw error;
         }
     }
 
-    getOneOrMultipleLocations = async (query) => {
+    show = async (query) => {
         try {
             const locationIds = query.split(",").map(id => parseInt(id.trim()));
 
@@ -46,15 +25,37 @@ class LocationService {
         }
     }
 
-    getLocations = async (filter) => {
+    store = async (data) => {
+        data.created = new Date().toISOString();
         try {
-            const locations = await Location.findAll({ where: filter });
-            return locations;
+            const createdLocation = await Location.create(data);
+            const id = createdLocation.id;
+            const url = `${BASE_URL}location/` + id;
+
+            createdLocation.url = url
+            await createdLocation.save();
+
+            return createdLocation;
         } catch (error) {
             throw error;
         }
     }
 
+    update = async (data) => {
+        if (data.id) {
+            try {
+                const [updatedRowsCount, [updatedLocation]] = await Location.update(data, {
+                    where: {
+                        id: data.id
+                    },
+                    returning: true
+                });
+                return updatedLocation;
+            } catch (error) {
+                throw error;
+            }
+        }
+    }
 }
 
 module.exports = LocationService;
