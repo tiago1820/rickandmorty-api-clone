@@ -1,7 +1,8 @@
-const { Router } = require("express");
-const apiRoute = Router();
+import { Router } from "express";
+export const apiRoute = Router();
 
-const APIController = require("../controllers/api.controller.js");
+import { APIController } from '../controllers/api.controller.js';
+
 const apiController = new APIController();
 
 apiRoute.get("/api", apiController.getApiInfo);
@@ -32,6 +33,3 @@ apiRoute.get("/api", apiController.getApiInfo);
  *       500:
  *         description: Internal server error.
  */
-
-
-module.exports = apiRoute;

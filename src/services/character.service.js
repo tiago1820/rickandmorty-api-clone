@@ -1,6 +1,6 @@
-const { Character, Location, Episode } = require("../db.js");
+import { Character, Location, Episode } from "../db.js";
 
-class CharacterService {
+export class CharacterService {
 
     index = async (filter) => {
         try {
@@ -88,6 +88,7 @@ class CharacterService {
                 status: data.status,
                 species: data.species,
                 gender: data.gender,
+                image: data.image,
                 origin: {
                     id: data.origin,
                 },
@@ -149,6 +150,7 @@ class CharacterService {
                     status: data.status,
                     species: data.species,
                     gender: data.gender,
+                    image: data.image,
                     origin: {
                         id: data.origin,
                     },
@@ -217,5 +219,3 @@ class CharacterService {
     }
 
 }
-
-module.exports = CharacterService;

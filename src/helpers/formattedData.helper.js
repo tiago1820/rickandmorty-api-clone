@@ -1,6 +1,6 @@
-const { BASE_URL } = require('../../config');
+import { BASE_URL } from '../../config.js';
 
-class FormattedData {
+export class FormattedData {
     formattedCharacter = async (characters, currentPage = 1, totalCharacters) => {
         let totalPages = Math.floor(totalCharacters / 20);
         if (totalPages < 1) {
@@ -91,5 +91,3 @@ class FormattedData {
         return formatted;
     }
 }
-
-module.exports = FormattedData;

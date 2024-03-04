@@ -1,9 +1,9 @@
-const express = require("express");
-const fileUpload  = require("express-fileupload");
-const swaggerUi = require("swagger-ui-express");
-const { swaggerSpec } = require("./swagger.js");
-const morgan = require("morgan");
-const router = require("./routes/index");
+import express from "express";
+import fileUpload from "express-fileupload";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./swagger.js";
+import morgan from "morgan";
+import { router } from "./routes/index.js";
 
 const server = express();
 
@@ -38,4 +38,4 @@ server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // server.use("/rickandmorty", router);
 
-module.exports = server;
+export { server };

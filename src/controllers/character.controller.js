@@ -1,11 +1,14 @@
-const CharacterService = require("../services/character.service.js");
-const AuthService = require('../services/auth.service.js');
-const S3Service = require("../services/s3.service.js");
-const FormattedData = require("../helpers/formattedData.helper.js");
-const jwt = require('jsonwebtoken');
+import { CharacterService } from '../services/character.service.js';
+import { AuthService } from '../services/auth.service.js';
+import { S3Service } from '../services/s3.service.js';
+import { FormattedData } from '../helpers/formattedData.helper.js';
+// require('dotenv').config();
+// const SECRET = process.env.SECRET;
+import dotenv from 'dotenv';
+dotenv.config();
 const { SECRET } = process.env;
 
-class CharacterController {
+export class CharacterController {
     constructor() {
         this.format = new FormattedData();
         this.charService = new CharacterService();
@@ -63,7 +66,7 @@ class CharacterController {
 
     show = async (req, res, next) => {
         try {
-            let data = await this.charService.getOneMultipleCharacters(req.params.ids);
+            let data = await this.charService.show(req.params.ids);
 
             if (!data) {
                 return res.status(404).json({ error: "No hay registros de characters." });
@@ -79,6 +82,7 @@ class CharacterController {
             }
 
         } catch (error) {
+            console.log("AQUI: ", error);
             return res.status(500).json({ error: "Error interno del servidor." });
         }
     }
@@ -91,6 +95,8 @@ class CharacterController {
                 data.image = req.files.image.name;
                 await this.aws.uploadFile(req.files.image)
             }
+
+            console.log("DATA: ", data);
 
             const result = await this.charService.store(data);
 
@@ -115,6 +121,8 @@ class CharacterController {
                 await this.aws.uploadFile(req.files.image)
             }
 
+            console.log("DATA: ", data.image);
+
             const result = await this.charService.update(data);
 
             if (!result) {
@@ -130,5 +138,3 @@ class CharacterController {
     }
 
 }
-
-module.exports = CharacterController;

@@ -1,6 +1,6 @@
-const { CHARACTER_URL, LOCATION, EPISODE } = require("../constants");
+import { CHARACTER_URL, LOCATION, EPISODE } from '../constants/index.js';
 
-class APIController {
+export class APIController {
 
     getApiInfo = async (req, res) => {
         try {
@@ -16,5 +16,3 @@ class APIController {
         }
     }
 }
-
-module.exports = APIController;

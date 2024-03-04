@@ -1,8 +1,9 @@
-const { Auth } = require('../db');
-const Validator = require('../helpers/validator.helper.js');
+// const { Auth } = require('../db');
+// const Validator = require('../helpers/validator.helper.js');
+import { Auth } from '../db.js';
+import { Validator } from '../helpers/validator.helper.js';
 
-
-class AuthService {
+export class AuthService {
     constructor() {
         this.validator = new Validator();
     }
@@ -45,5 +46,3 @@ class AuthService {
         }
     }
 }
-
-module.exports = AuthService;

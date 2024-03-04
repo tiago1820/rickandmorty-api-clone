@@ -1,7 +1,11 @@
-const swaggerJSDoc = require("swagger-jsdoc");
-const path = require("path");
+import swaggerJSDoc from "swagger-jsdoc";
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const options = swaggerJSDoc.Options = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const options = {
     definition: {
         openapi: "3.0.0",
         info: {
@@ -9,9 +13,9 @@ const options = swaggerJSDoc.Options = {
             version: "1.0.0",
         },
     },
-    apis: [`${path.join(__dirname, "./routes/*")}`],
+    apis: [path.join(__dirname, "./routes/*.js")], 
 };
 
 const swaggerSpec = swaggerJSDoc(options);
 
-module.exports = { swaggerSpec}
+export { swaggerSpec };

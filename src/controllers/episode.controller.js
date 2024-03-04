@@ -1,7 +1,7 @@
-const EpisodeService = require("../services/episode.service.js");
-const FormattedData = require("../helpers/formattedData.helper.js");
+import { EpisodeService } from '../services/episode.service.js';
+import { FormattedData } from '../helpers/formattedData.helper.js';
 
-class EpisodeController {
+export class EpisodeController {
     constructor() {
         this.epiService = new EpisodeService();
         this.format = new FormattedData();
@@ -93,5 +93,3 @@ class EpisodeController {
         }
     }
 }
-
-module.exports = EpisodeController;

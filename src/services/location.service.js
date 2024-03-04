@@ -1,7 +1,7 @@
-const { Location } = require("../db.js");
-const { BASE_URL } = require('../../config.js');
+import { Location } from '../db.js';
+import { BASE_URL } from '../../config.js';
 
-class LocationService {
+export class LocationService {
 
     index = async (filter) => {
         try {
@@ -57,5 +57,3 @@ class LocationService {
         }
     }
 }
-
-module.exports = LocationService;

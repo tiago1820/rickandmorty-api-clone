@@ -1,8 +1,6 @@
-const server = require("./src/app");
-const { conn } = require('./src/db.js');
-
-require("./config.js");
-
+import { server } from './src/app.js';
+import { conn } from './src/db.js';
+import './config.js';
 
 const PORT = 3001;
 

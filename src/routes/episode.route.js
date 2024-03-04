@@ -1,10 +1,10 @@
-const { Router } = require("express");
-const episodeRoute = Router();
+import { Router } from "express";
+export const episodeRoute = Router();
 
-const EpisodeController = require("../controllers/episode.controller.js");
+import { EpisodeController } from '../controllers/episode.controller.js';
+import { Encryption } from '../helpers/encryption.helper.js';
+
 const epiController = new EpisodeController();
-
-const Encryption = require('../helpers/encryption.helper.js');
 const encrypt = new Encryption();
 
 episodeRoute.get("/api/episode", encrypt.verifyToken, epiController.index);
@@ -167,5 +167,3 @@ episodeRoute.get("/api/episode/:ids", encrypt.verifyToken, epiController.show);
 episodeRoute.post("/api/episode", encrypt.verifyToken, epiController.store);
 
 episodeRoute.put("/api/episode", encrypt.verifyToken, epiController.update);
-
-module.exports = episodeRoute;

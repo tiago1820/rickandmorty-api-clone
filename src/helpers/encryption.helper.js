@@ -1,10 +1,11 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-require("dotenv").config();
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 const { SECRET } = process.env;
 
 
-class Encryption {
+export class Encryption {
 
     encryptPassword = async (password) => {
         const salt = await bcrypt.genSalt(10);
@@ -31,5 +32,3 @@ class Encryption {
 
     }
 }
-
-module.exports = Encryption;

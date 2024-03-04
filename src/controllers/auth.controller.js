@@ -1,10 +1,13 @@
-const AuthService = require('../services/auth.service.js');
-const Encryption = require('../helpers/encryption.helper');
-const jwt = require('jsonwebtoken');
-require("dotenv").config();
+import { AuthService } from '../services/auth.service.js';
+import { Encryption } from '../helpers/encryption.helper.js';
+import jwt from 'jsonwebtoken';
+
+import dotenv from 'dotenv';
+dotenv.config();
+
 const { SECRET } = process.env;
 
-class AuthController {
+export class AuthController {
     constructor() {
         this.auth = new AuthService();
         this.encrypt = new Encryption();
@@ -13,12 +16,8 @@ class AuthController {
     signup = async (req, res) => {
         let { email, password } = req.body;
         try {
-            // encripta el password
             password = await this.encrypt.encryptPassword(password);
-            // alta en la base de datos
             const newUser = await this.auth.signup(email, password);
-            // se crea el token
-
             const token = jwt.sign({ id: newUser.id }, SECRET, {
                 expiresIn: 60 * 60 * 24
             });
@@ -55,9 +54,6 @@ class AuthController {
             console.error("Error en signin:", error);
             return res.status(500).json({ error: "Error interno del servidor" });
         }
-        
 
     }
 }
-
-module.exports = AuthController;
