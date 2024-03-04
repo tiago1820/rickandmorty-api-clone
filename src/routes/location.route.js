@@ -1,10 +1,10 @@
-const { Router } = require("express");
-const locationRoute = Router();
+import { Router } from "express";
+import { LocationController } from '../controllers/location.controller.js';
+import { Encryption } from '../helpers/encryption.helper.js';
 
-const LocationController = require("../controllers/location.controller.js");
+export const locationRoute = Router();
+
 const locController = new LocationController();
-
-const Encryption = require('../helpers/encryption.helper.js');
 const encrypt = new Encryption();
 
 locationRoute.get("/api/location", encrypt.verifyToken, locController.index);
@@ -138,5 +138,3 @@ locationRoute.get("/api/location/:ids", locController.show);
 locationRoute.post("/api/location", encrypt.verifyToken, locController.store);
 
 locationRoute.put('/api/location', encrypt.verifyToken, locController.update);
-
-module.exports = locationRoute;

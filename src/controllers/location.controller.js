@@ -1,7 +1,7 @@
-const LocationService = require("../services/location.service.js");
-const FormattedData = require("../helpers/formattedData.helper.js");
+import { LocationService } from '../services/location.service.js';
+import { FormattedData } from '../helpers/formattedData.helper.js';
 
-class LocationController {
+export class LocationController {
     constructor() {
         this.locService = new LocationService();
         this.format = new FormattedData();
@@ -89,5 +89,3 @@ class LocationController {
     }
 
 }
-
-module.exports = LocationController;

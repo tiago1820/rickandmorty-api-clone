@@ -1,9 +1,9 @@
-const { S3Client, PutObjectCommand, ListObjectsCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
-const { AWS_BUCKET_REGION, AWS_PUBLIC_KEY, AWS_SECRET_KEY, AWS_BUCKET_NAME } = require("../../config.js");
-const fs = require("fs");
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+import { S3Client, PutObjectCommand, ListObjectsCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { AWS_BUCKET_REGION, AWS_PUBLIC_KEY, AWS_SECRET_KEY, AWS_BUCKET_NAME } from "../../config.js";
+import fs from 'fs';
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-class S3Service {
+export class S3Service {
     constructor() {
         this.client = new S3Client({
             region: AWS_BUCKET_REGION,
@@ -40,11 +40,9 @@ class S3Service {
                 const imageURL = await this.getFileURL(character.image);
                 character.image = imageURL;
             }
-            
+
         }
-    
+
         return characters;
     }
 }
-
-module.exports = S3Service;

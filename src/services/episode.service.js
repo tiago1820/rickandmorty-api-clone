@@ -1,6 +1,6 @@
-const { Episode } = require("../db.js");
+import { Episode } from '../db.js';
 
-class EpisodeService {
+export class EpisodeService {
 
     index = async (filter) => {
         try {
@@ -52,5 +52,3 @@ class EpisodeService {
     }
 
 }
-
-module.exports = EpisodeService;

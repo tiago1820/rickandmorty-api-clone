@@ -1,8 +1,9 @@
-const { Router } = require("express");
-const characterRoute = Router();
+export const characterRoute = Router();
+import { Router } from "express";
 
-const CharacterController = require("../controllers/character.controller.js");
-const Encryption = require('../helpers/encryption.helper.js');
+import { CharacterController } from "../controllers/character.controller.js";
+import { Encryption } from '../helpers/encryption.helper.js';
+
 const charController = new CharacterController();
 const encrypt = new Encryption();
 
@@ -81,6 +82,3 @@ characterRoute.get("/api/character/:ids", encrypt.verifyToken, charController.sh
 characterRoute.post("/api/character", encrypt.verifyToken, charController.store);
 
 characterRoute.put('/api/character', encrypt.verifyToken, charController.update);
-
-
-module.exports = characterRoute;
