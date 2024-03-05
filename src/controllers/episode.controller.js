@@ -8,6 +8,12 @@ export class EpisodeController {
     }
 
     index = async (req, res, next) => {
+        const user = await this.auth.show(req.userId);
+
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+
         let { page, ...filter } = req.query;
 
         if (page && parseInt(page) <= 0) {
@@ -48,6 +54,12 @@ export class EpisodeController {
     }
 
     show = async (req, res, next) => {
+        const user = await this.auth.show(req.userId);
+
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+
         try {
             let data = await this.epiService.show(req.params.ids);
 
@@ -68,6 +80,12 @@ export class EpisodeController {
     }
 
     store = async (req, res, next) => {
+        const user = await this.auth.show(req.userId);
+
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+
         const data = req.body;
 
         try {
@@ -81,6 +99,12 @@ export class EpisodeController {
     }
 
     update = async (req, res, next) => {
+        const user = await this.auth.show(req.userId);
+
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+        
         const data = req.body;
 
         try {

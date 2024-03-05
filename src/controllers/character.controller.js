@@ -2,8 +2,7 @@ import { CharacterService } from '../services/character.service.js';
 import { AuthService } from '../services/auth.service.js';
 import { S3Service } from '../services/s3.service.js';
 import { FormattedData } from '../helpers/formattedData.helper.js';
-// require('dotenv').config();
-// const SECRET = process.env.SECRET;
+
 import dotenv from 'dotenv';
 dotenv.config();
 const { SECRET } = process.env;
@@ -65,6 +64,12 @@ export class CharacterController {
     }
 
     show = async (req, res, next) => {
+        const user = await this.auth.show(req.userId);
+
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+
         try {
             let data = await this.charService.show(req.params.ids);
 
@@ -88,6 +93,12 @@ export class CharacterController {
     }
 
     store = async (req, res, next) => {
+        const user = await this.auth.show(req.userId);
+
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+
         const data = req.body;
 
         try {
@@ -95,8 +106,6 @@ export class CharacterController {
                 data.image = req.files.image.name;
                 await this.aws.uploadFile(req.files.image)
             }
-
-            console.log("DATA: ", data);
 
             const result = await this.charService.store(data);
 
@@ -113,6 +122,12 @@ export class CharacterController {
     }
 
     update = async (req, res, next) => {
+        const user = await this.auth.show(req.userId);
+
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+        
         const data = req.body;
 
         try {
