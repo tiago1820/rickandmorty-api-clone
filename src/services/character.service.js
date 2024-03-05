@@ -80,63 +80,46 @@ export class CharacterService {
 
     store = async (data) => {
         try {
-
-            const episodeUrl = "http://localhost:3001/api/episode/" + data.episode;
-
             const info = {
                 name: data.name,
                 status: data.status,
                 species: data.species,
                 gender: data.gender,
                 image: data.image,
-                origin: {
-                    id: data.origin,
-                },
-                location: {
-                    id: data.location,
-                },
+                origin: { id: data.origin },
+                location: { id: data.location },
                 created: new Date().toISOString()
             };
 
-            let { dataValues } = await Character.create(info);
-            let { episode } = dataValues;
-            if (!episode) { episode = [] };
-            episode.push(episodeUrl);
-
-
+            const { dataValues } = await Character.create(info);
             const { id: charId } = dataValues;
-            const characterUrl = "http://localhost:3001/api/character/" + charId;
 
+            const characterUrl = `http://localhost:3001/api/character/${charId}`;
+            const episodeUrl = `http://localhost:3001/api/episode/${data.episode}`;
+
+            let episode = dataValues.episode ? [...dataValues.episode] : [];
+            episode.push(episodeUrl);
 
             await Character.update({ url: characterUrl, episode }, { where: { id: charId } });
 
-            dataValues = await Character.findByPk(charId);
-
-            // LOCATION
-            const [location] = await Location.findAll({ where: { id: dataValues.location.id } });
-            let { residents } = location.dataValues;
-            if (!residents) { residents = [] };
+            const [location] = await Location.findAll({ where: { id: data.location } });
+            let residents = location.dataValues.residents ?? [];
             residents.push(characterUrl);
-            await Location.update({ residents: residents }, { where: { id: location.id } });
+            await Location.update({ residents }, { where: { id: data.location } });
 
-            // EPISODE
-            const [oneEpisode] = await Episode.findAll({ where: { id: data.episode } })
-            let { characters } = oneEpisode.dataValues;
-            if (!characters) { characters = [] }
+            const [oneEpisode] = await Episode.findAll({ where: { id: data.episode } });
+            let { characters = [] } = oneEpisode.dataValues;
             characters.push(characterUrl);
 
-            await Episode.update({ characters: characters }, {
-                where: { id: oneEpisode.id }
-            })
+            await Episode.update({ characters }, { where: { id: data.episode } });
 
-            dataValues = await Character.findByPk(charId);
+            return { success: true, message: 'The character was created successfully.' };
 
-            return dataValues;
         } catch (error) {
-            throw error;
+            return { success: false, message: 'Failed to create the character.' };
         }
-
     }
+
 
     update = async (data) => {
         if (data.id) {
@@ -195,7 +178,7 @@ export class CharacterService {
                 return { success: true, message: 'The character was updated successfully.' };
 
             } catch (error) {
-                throw error;
+                return { success: false, message: 'Failed to update the character.' };
             }
         }
     }
