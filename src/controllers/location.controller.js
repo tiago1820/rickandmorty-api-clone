@@ -8,6 +8,12 @@ export class LocationController {
     }
 
     index = async (req, res, next) => {
+        const user = await this.auth.show(req.userId);
+
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+
         let { page, ...filter } = req.query;
 
         if (page && parseInt(page) <= 0) {
@@ -48,6 +54,12 @@ export class LocationController {
     }
 
     show = async (req, res, next) => {
+        const user = await this.auth.show(req.userId);
+
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+
         try {
             let data = await this.locService.show(req.params.ids);
 
@@ -67,6 +79,12 @@ export class LocationController {
     }
 
     store = async (req, res, next) => {
+        const user = await this.auth.show(req.userId);
+
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+
         const data = req.body;
 
         try {
@@ -78,6 +96,12 @@ export class LocationController {
     }
 
     update = async (req, res, next) => {
+        const user = await this.auth.show(req.userId);
+
+        if (!user) {
+            return res.status(404).send('No user found');
+        }
+        
         const data = req.body;
 
         try {
