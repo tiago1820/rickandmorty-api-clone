@@ -1,10 +1,10 @@
-import { Router } from 'express';
-export const authRoute = Router();
+// import { Router } from 'express';
+// export const authRoute = Router();
 
-import { AuthController } from '../controllers/auth.controller.js';
+// import { AuthController } from '../controllers/auth.controller.js';
 
-const auth = new AuthController();
+// const auth = new AuthController();
 
-authRoute.post('/api/auth/signup', auth.signup);
+// authRoute.post('/api/auth/signup', auth.signup);
 
-authRoute.post('/api/auth/signin', auth.signin);
+// authRoute.post('/api/auth/signin', auth.signin);
