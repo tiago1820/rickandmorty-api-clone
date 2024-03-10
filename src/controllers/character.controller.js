@@ -1,7 +1,8 @@
 import { CharacterService } from '../services/character.service.js';
-import { AuthService } from '../services/auth.service.js';
+// import { UserService } from '../services/user.service.js';
 import { S3Service } from '../services/s3.service.js';
 import { FormattedData } from '../helpers/formattedData.helper.js';
+import { HelperIndex } from '../helpers/helperIndex.helper.js';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -11,60 +12,28 @@ export class CharacterController {
     constructor() {
         this.format = new FormattedData();
         this.charService = new CharacterService();
-        this.auth = new AuthService();
+        // this.auth = new AuthService();
         this.aws = new S3Service();
     }
 
     index = async (req, res, next) => {
-        const user = await this.auth.show(req.userId);
-
-        if (!user) {
-            return res.status(404).send('No user found');
-        }
-
-        let { page, ...filter } = req.query;
-
-        if (page && parseInt(page) <= 0) {
-            page = 1;
-        }
-
-        const allowedFilters = ['name', 'status', 'species', 'type', 'gender'];
-        const invalidFilters = Object.keys(filter).filter(key => !allowedFilters.includes(key));
-        if (invalidFilters.length > 0) {
-            return res.status(400).json({ error: `Filtros no permitidos: ${invalidFilters.join(', ')}` })
-        }
-
         try {
-
+            // const helper = new HelperIndex(this.auth, this.aws, this.format);
+            // const user = await helper.authenticateUser(req.userId, res);
+            const filter = helper.validateFilters(req.query, res);
             let data = await this.charService.index(filter);
-            const count = data.length;
-            const totalCharacters = count;
-
-            if (!data) {
-                return res.status(404).json({ error: "No hay registros de characters." });
-            }
-
-            if (page) {
-                page = parseInt(page);
-                if (!isNaN(page) && page > 0) {
-                    const pageSize = 20;
-                    const startIndex = (page - 1) * pageSize;
-                    data = data.slice(startIndex, startIndex + pageSize)
-                }
-            }
-
-            data = await this.aws.getImageURL(data);
-            data = await this.format.formattedCharacter(data, page, totalCharacters);
+            data = helper.paginateData(data, req.query.page);
+            data = await helper.getImages(data);
+            data = await helper.formatCharacterData(data, req.query.page);
 
             return res.status(200).json(data);
         } catch (error) {
             return res.status(500).json({ error: "Error interno del servidor." });
         }
-
     }
 
     show = async (req, res, next) => {
-        const user = await this.auth.show(req.userId);
+        // const user = await this.auth.show(req.userId);
 
         if (!user) {
             return res.status(404).send('No user found');
@@ -87,13 +56,12 @@ export class CharacterController {
             }
 
         } catch (error) {
-            console.log("AQUI: ", error);
             return res.status(500).json({ error: "Error interno del servidor." });
         }
     }
 
     store = async (req, res, next) => {
-        const user = await this.auth.show(req.userId);
+        // const user = await this.auth.show(req.userId);
 
         if (!user) {
             return res.status(404).send('No user found');
@@ -116,18 +84,17 @@ export class CharacterController {
             return res.status(201).json(result);
 
         } catch (error) {
-            console.log("AQUI: ", error);
             return res.status(500).json({ error: "Error interno del servidor." });
         }
     }
 
     update = async (req, res, next) => {
-        const user = await this.auth.show(req.userId);
+        // const user = await this.auth.show(req.userId);
 
         if (!user) {
             return res.status(404).send('No user found');
         }
-        
+
         const data = req.body;
 
         try {
@@ -135,8 +102,6 @@ export class CharacterController {
                 data.image = req.files.image.name;
                 await this.aws.uploadFile(req.files.image)
             }
-
-            console.log("DATA: ", data.image);
 
             const result = await this.charService.update(data);
 
@@ -147,9 +112,7 @@ export class CharacterController {
             return res.status(201).json(result);
 
         } catch (error) {
-            console.log("AQUI: ", error);
             return res.status(500).json({ error: "Error interno del servidor." });
         }
     }
-
 }

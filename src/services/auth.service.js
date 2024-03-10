@@ -1,48 +1,46 @@
-// const { Auth } = require('../db');
-// const Validator = require('../helpers/validator.helper.js');
-import { Auth } from '../db.js';
+import { User } from '../db.js';
 import { Validator } from '../helpers/validator.helper.js';
 
-export class AuthService {
+export class UserService {
     constructor() {
         this.validator = new Validator();
     }
 
-    signup = async (email, password) => {
-        try {
-            const existingUser = await Auth.findOne({ where: { email: email } });
-            if (existingUser) {
-                throw new Error('El usuario ya existe');
-            }
+    // signup = async (email, password) => {
+    //     try {
+    //         const existingUser = await User.findOne({ where: { email: email } });
+    //         if (existingUser) {
+    //             throw new Error('El usuario ya existe');
+    //         }
 
-            const newUser = await Auth.create({
-                email: email,
-                password: password
-            });
+    //         const newUser = await User.create({
+    //             email: email,
+    //             password: password
+    //         });
 
-            if (newUser) return newUser;
-        } catch (error) {
-            throw error;
-        }
-    }
+    //         if (newUser) return newUser;
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
 
-    show = async (params) => {
-        try {
-            let user;
+    // show = async (params) => {
+    //     try {
+    //         let user;
 
-            if (this.validator.isValidUUID(params)) {
-                user = await Auth.findByPk(params);
-            } else {
-                user = await Auth.findOne({ where: { email: params } });
-            }
+    //         if (this.validator.isValidUUID(params)) {
+    //             user = await User.findByPk(params);
+    //         } else {
+    //             user = await User.findOne({ where: { email: params } });
+    //         }
 
-            if (!user) {
-                throw new Error('El usuario no se encontró');
-            }
+    //         if (!user) {
+    //             throw new Error('El usuario no se encontró');
+    //         }
 
-            return user;
-        } catch (error) {
-            throw error;
-        }
-    }
+    //         return user;
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
 }
