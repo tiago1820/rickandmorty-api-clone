@@ -15,7 +15,6 @@ export class UserController {
         let data = { 'error': '' };
 
         try {
-
             //hacer la validacion
             const validator = true;
             if (validator) {
