@@ -65,6 +65,7 @@ export class AuthController {
 
     }
 
+    // logout puede ser hecho en el front-end
     logout = async (req, res) => { };
 
 }
