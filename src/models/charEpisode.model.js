@@ -1,20 +1,17 @@
 import { DataTypes } from "sequelize";
 
 export default (sequelize) => {
-    sequelize.define("Episode", {
+    sequelize.define("CharEpisode", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        name: {
-            type: DataTypes.STRING
+        charId: {
+            type: DataTypes.INTEGER,                        
         },
-        air_date: {
-            type: DataTypes.STRING
-        },
-        episode: {
-            type: DataTypes.STRING
+        episodeId: {
+            type: DataTypes.INTEGER,                        
         },
         created: {
             type: DataTypes.STRING

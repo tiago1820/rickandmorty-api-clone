@@ -16,12 +16,6 @@ export default (sequelize) => {
         dimension: {
             type: DataTypes.STRING
         },
-        residents: {
-            type: DataTypes.ARRAY(DataTypes.STRING)
-        },
-        url: {
-            type: DataTypes.STRING
-        },
         created: {
             type: DataTypes.STRING
         }

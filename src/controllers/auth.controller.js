@@ -36,6 +36,7 @@ export class AuthController {
             return res.status(200).json(data);
 
         } catch (error) {
+            console.log("HOLA: ", error);
             data['error'] = 'Internal Server Error';
             return res.status(500).json(data);
         }
@@ -65,6 +66,7 @@ export class AuthController {
 
     }
 
+    // logout puede ser hecho en el front-end
     logout = async (req, res) => { };
 
 }

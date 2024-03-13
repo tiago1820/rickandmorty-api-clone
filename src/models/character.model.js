@@ -11,7 +11,7 @@ export default (sequelize) => {
             type: DataTypes.STRING
         },
         status: {
-            type: DataTypes.ENUM("Alive", "Dead", "unknown")
+            type: DataTypes.ENUM("alive", "dead", "unknown")
         },
         species: {
             type: DataTypes.STRING
@@ -20,26 +20,9 @@ export default (sequelize) => {
             type: DataTypes.STRING
         },
         gender: {
-            type: DataTypes.ENUM("Female", "Male", "Genderless", "unknown")
-        },
-        origin: {
-            type: DataTypes.JSONB,
-            allowNull: false,
-            defaultValue: {}
-        },
-        location: {
-            type: DataTypes.JSONB,
-            allowNull: true,
-            defaultValue: {}
+            type: DataTypes.ENUM("female", "male", "genderless", "unknown")
         },
         image: {
-            type: DataTypes.STRING
-        },
-        episode: {
-            type: DataTypes.ARRAY(DataTypes.STRING),
-            defaultValue: []
-        },
-        url: {
             type: DataTypes.STRING
         },
         created: {
