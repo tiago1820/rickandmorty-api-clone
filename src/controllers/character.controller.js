@@ -1,8 +1,15 @@
+import { Character } from '../db.js';
+import { CharOrigin } from '../db.js';
+import { CharLocation } from '../db.js';
+import { CharEpisode } from '../db.js';
+
+
 import { CharacterService } from '../services/character.service.js';
 // import { UserService } from '../services/user.service.js';
 import { S3Service } from '../services/s3.service.js';
 import { FormattedData } from '../helpers/formattedData.helper.js';
 import { HelperIndex } from '../helpers/helperIndex.helper.js';
+// import { AuthService } from '../services/auth.service.js';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -63,29 +70,57 @@ export class CharacterController {
     store = async (req, res, next) => {
         // const user = await this.auth.show(req.userId);
 
-        if (!user) {
-            return res.status(404).send('No user found');
-        }
-
-        const data = req.body;
+        // if (!user) {
+        //     return res.status(404).send('No user found');
+        // }
 
         try {
-            if (req.files) {
-                data.image = req.files.image.name;
-                await this.aws.uploadFile(req.files.image)
+            let data = { 'error': '' };
+
+            // validator
+            const validator = true;
+            if (validator) {
+                const { name, status, species, type, gender, origin, location, episode, image } = req.body;
+                let imageName = '';
+                if (req.files) {
+                    imageName = req.files.image.name;
+                    await this.aws.uploadFile(req.files.image)
+                }
+
+                const characterExists = await Character.count({ where: { name } });
+
+                if (characterExists === 0) {
+                    const newCharacter = (await Character.create({
+                        name: name,
+                        status: status,
+                        species: species,
+                        type: type,
+                        gender: gender,
+                        image: imageName
+                    })).get({ plain: true });
+
+                    await CharOrigin.create({ charId: newCharacter.id, locationId: origin });
+                    await CharLocation.create({ charId: newCharacter.id, locationId: location });
+                    await CharEpisode.create({ charId: newCharacter.id, episodeId: episode });
+
+                    data = { ...data, message: `${newCharacter.name} character successfully created.` }
+
+                } else {
+                    data['error'] = 'Character already registered!';
+                    return res.status(409).json(data);
+                }
+            } else {
+                data['error'] = 'Email already registered!';
+                return res.status(409).json(data);
             }
 
-            const result = await this.charService.store(data);
-
-            if (!result) {
-                return res.status(404).json({ error: "Error al crear o editar el personaje" });
-            }
-
-            return res.status(201).json(result);
+            return res.status(201).json(data);
 
         } catch (error) {
-            return res.status(500).json({ error: "Error interno del servidor." });
+            data['error'] = 'Internal Server Error';
+            return res.status(500).json(data);
         }
+
     }
 
     update = async (req, res, next) => {
