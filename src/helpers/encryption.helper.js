@@ -4,9 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 const { SECRET } = process.env;
 
-
 export class Encryption {
-
     encryptPassword = async (password) => {
         const salt = await bcrypt.genSalt(10);
         return bcrypt.hash(password, salt);
@@ -18,7 +16,6 @@ export class Encryption {
 
     verifyToken = (req, res, next) => {
         const token = req.headers['x-access-token'];
-
         if (!token) {
             return res.status(401).json({
                 auth: false,
@@ -26,9 +23,7 @@ export class Encryption {
             });
         }
         const decoded = jwt.verify(token, SECRET);
-
         req.userId = decoded.id;
         next();
-
     }
 }
